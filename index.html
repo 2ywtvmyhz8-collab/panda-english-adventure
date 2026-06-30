@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panda English Adventure Alpha｜Unit 3 Health Kingdom</title>
+<style>
+:root{
+  --bg1:#fff7db;--bg2:#dff7ff;--ink:#1f2937;--muted:#64748b;--card:#ffffffee;
+  --blue:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#facc15;--pink:#ec4899;--purple:#8b5cf6;--orange:#fb923c;
+  --noun:#2563eb;--verb:#dc2626;--adj:#16a34a;--adv:#d97706;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",Arial,sans-serif;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--ink)}
+.nav{position:sticky;top:0;z-index:10;background:#ffffffdb;backdrop-filter:blur(10px);border-bottom:1px solid #e5e7eb;padding:8px;display:flex;gap:6px;flex-wrap:wrap}
+button{border:0;border-radius:15px;padding:11px 14px;margin:4px;background:var(--blue);color:white;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 4px 12px #0001}
+button:hover{filter:brightness(.97);transform:translateY(-1px)}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.choice{background:#fff;color:#1f2937;border:2px solid #cbd5e1}
+.correct{background:#22c55e!important;color:white!important;border-color:#22c55e!important}
+.wrong{background:#ef4444!important;color:white!important;border-color:#ef4444!important}
+.wrap{max-width:1180px;margin:0 auto;padding:18px}
+.screen{display:none}.screen.active{display:block}
+.hero,.card{background:var(--card);border-radius:28px;padding:24px;margin:18px 0;box-shadow:0 8px 26px #0001;border:1px solid #fff}
+.hero{min-height:260px;background:linear-gradient(135deg,#ffec99,#ffd6e8 48%,#c5f6fa);position:relative;overflow:hidden}
+.hero h1{font-size:40px;color:#be185d;margin:0 0 8px}.hero p{font-size:18px;line-height:1.65;max-width:760px}
+.heroEmoji{position:absolute;right:25px;top:18px;font-size:100px}
+.stat{display:inline-flex;align-items:center;gap:7px;background:#fff;border-radius:999px;padding:10px 14px;margin:5px;font-weight:950}
+.progress{height:22px;border-radius:999px;background:#e5e7eb;overflow:hidden;margin-top:12px}.bar{height:100%;width:0;background:linear-gradient(90deg,#22c55e,#facc15,#ec4899);transition:.35s}
+h2{margin:0 0 14px;color:#087f8c;font-size:28px} h3{margin:12px 0 8px}.small{font-size:14px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.mapTile{background:#fff;border-radius:22px;padding:18px;border:3px solid #e0f2fe;min-height:165px}
+.mapTile.done{border-color:#22c55e;background:#f0fdf4}.mapTile.current{border-color:#facc15;background:#fffbeb}
+.word{border:3px solid #dff3f0;background:#fbfffe;border-radius:22px;padding:15px;text-align:center;min-height:190px}
+.emoji{font-size:54px}.en{font-size:24px;font-weight:950}.zh{color:#64748b;line-height:1.45}
+.tag{display:inline-block;color:white;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:950}.noun{background:var(--noun)}.verb{background:var(--verb)}.adjective{background:var(--adj)}.adverb{background:var(--adv)}
+.story{background:#fff9db;border-left:9px solid var(--yellow);border-radius:20px;padding:18px;font-size:18px;line-height:1.8}
+.mission{border:3px solid #b2f2bb;background:#ebfbee;border-radius:22px;padding:16px;margin:12px 0}
+.quest{border:3px solid #e0f2fe;background:#f0f9ff;border-radius:22px;padding:16px;margin:12px 0}
+input,select,textarea{font-size:17px;padding:12px;border:2px solid #cbd5e1;border-radius:14px;width:min(520px,100%);background:#fff}
+.tile{display:inline-block;background:#fff;border:2px solid #94a3b8;border-radius:16px;padding:12px 15px;margin:7px;font-weight:950;cursor:grab}
+.dropzone{display:inline-flex;align-items:center;justify-content:center;min-height:74px;min-width:180px;margin:8px;border:3px dashed #94a3b8;border-radius:20px;background:#f8fafc;font-weight:950;vertical-align:top}
+.sentenceBox{font-size:20px;min-height:58px;border:2px dashed #adb5bd;border-radius:18px;padding:12px;background:#fff}
+.hp{font-size:30px;letter-spacing:2px;line-height:1.5}.reward{font-size:36px;text-align:center;background:#fff0f6;border-radius:24px;padding:18px}
+.toast{position:fixed;right:18px;bottom:18px;background:#111827;color:#fff;padding:14px 18px;border-radius:18px;z-index:999;font-weight:950;box-shadow:0 8px 24px #0003}
+.cardItem{border:3px solid #f3e8ff;background:#fff;border-radius:22px;padding:16px;text-align:center}
+table{border-collapse:collapse;width:100%;background:#fff;border-radius:16px;overflow:hidden}td,th{border:1px solid #e5e7eb;padding:10px;text-align:left}th{background:#f8fafc}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:998;font-size:28px;overflow:hidden}
+@media(max-width:720px){.heroEmoji{position:static;font-size:70px}.hero h1{font-size:30px}.nav button{font-size:13px;padding:9px 10px}.wrap{padding:10px}.card,.hero{padding:18px;border-radius:22px}}
+@media print{.nav,button{display:none}.screen{display:block}.card,.hero{box-shadow:none;border:1px solid #ddd}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="nav">
+<button onclick="show('home')">🏠 首頁</button>
+<button onclick="show('map')">🗺 地圖</button>
+<button onclick="show('vocab')">🎴 單字</button>
+<button onclick="show('food')">🍽 食物分類</button>
+<button onclick="show('reading')">📖 閱讀</button>
+<button onclick="show('phonics')">🔤 拼音</button>
+<button onclick="show('grammar')">✏️ 文法</button>
+<button onclick="show('boss')">👾 Boss</button>
+<button onclick="show('report')">👩 媽媽</button>
+</div>
+
+<div class="wrap">
+<section id="home" class="screen active">
+  <div class="hero">
+    <div class="heroEmoji">🐼🥗</div>
+    <h1>Panda English Adventure</h1>
+    <p><b>Alpha｜Unit 3 Health Kingdom</b><br>Doctor Panda 要帶妹妹進入健康王國，學會 healthy choices、food groups、Long e、比較級與 be going to。</p>
+    <span class="stat">⭐ XP <span id="xp">0</span></span>
+    <span class="stat">💰 Coins <span id="coins">0</span></span>
+    <span class="stat">✅ Correct <span id="score">0</span></span>
+    <span class="stat">🎚 Level <span id="level">1</span></span>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+  </div>
+  <div class="card">
+    <h2>🎯 今日任務</h2>
+    <div class="grid2">
+      <div class="mission">🎴 學 12 張核心單字卡</div>
+      <div class="mission">🍽 完成 Food Group 分類</div>
+      <div class="mission">📖 讀 Healthy Choices</div>
+      <div class="mission">👾 打敗 Junk Food Monster</div>
+    </div>
+    <button onclick="show('map')">開始冒險 ▶</button>
+  </div>
+</section>
+
+<section id="map" class="screen">
+  <div class="card">
+    <h2>🗺 Health Kingdom 世界地圖</h2>
+    <div class="grid2" id="worldMap"></div>
+  </div>
+</section>
+
+<section id="vocab" class="screen">
+  <div class="card">
+    <h2>🎴 Word Cards 單字圖鑑</h2>
+    <p class="small">這一版依 Unit 3 課本與老師筆記整理。點單字可聽發音；聽完可領一次獎勵。</p>
+    <div class="grid" id="vocabGrid"></div>
+    <button onclick="awardOnce('vocab_listened',40,'單字聽完 +40 XP',this)">我聽完單字 +40 XP</button>
+  </div>
+  <div class="card">
+    <h2>🌳 Word Family 規律樹</h2>
+    <div class="mission">health → healthy → healthier → healthiest → unhealthy</div>
+    <div class="mission">nutrition → nutritious → nutrient</div>
+    <div class="mission">choice → choose → chose → chosen</div>
+    <div class="mission">improve → improves → improving → improved → improvement</div>
+  </div>
+</section>
+
+<section id="food" class="screen">
+  <div class="card">
+    <h2>🍽 Food Group Challenge</h2>
+    <p>把食物拖到正確分類。每個食物只會加分一次，不能刷分。</p>
+    <div id="foodTiles"></div>
+    <div id="foodZones"></div>
+  </div>
+  <div class="card">
+    <h2>🥗 Healthy or Unhealthy?</h2>
+    <div class="quest"><b>Which is healthier?</b><br>
+      <button class="choice" onclick="checkChoice(this,'salad','salad',15)">🥗 salad</button>
+      <button class="choice" onclick="checkChoice(this,'fries','salad',15)">🍟 French fries</button>
+    </div>
+    <div class="quest"><b>Which has more variety?</b><br>
+      <button class="choice" onclick="checkChoice(this,'balanced plate','balanced plate',15)">🥗🍚🍗🥛 balanced plate</button>
+      <button class="choice" onclick="checkChoice(this,'candy','balanced plate',15)">🍬 candy only</button>
+    </div>
+  </div>
+</section>
+
+<section id="reading" class="screen">
+  <div class="card">
+    <h2>📖 Reading Adventure：Healthy Choices</h2>
+    <p class="small">一句一句讀，不一次塞整篇。每句都有聽力與理解題。</p>
+    <div id="readingBox"></div>
+  </div>
+</section>
+
+<section id="phonics" class="screen">
+  <div class="card">
+    <h2>🔤 Phonics Lab：Long e</h2>
+    <p class="small">課本 Unit 3：e_e, ee, ea, y, ey。注意：ea 有例外，例如 healthy, bread, weather 不是 long e。</p>
+    <div class="grid2">
+      <div class="mission"><b>e_e</b><br>athlete, complete, these</div>
+      <div class="mission"><b>ee</b><br>green, tree, feet, sheep</div>
+      <div class="mission"><b>ea</b><br>eat, teacher, beach, read</div>
+      <div class="mission"><b>y / ey</b><br>happy, healthy, key, money</div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>🎮 Long e Basket</h2>
+    <div id="phonicsTiles"></div>
+    <div id="phonicsZones"></div>
+  </div>
+</section>
+
+<section id="grammar" class="screen">
+  <div class="card">
+    <h2>✏️ Grammar Lab</h2>
+    <div class="mission"><b>Comparatives 比較級</b><br>short adjective + er：healthy → healthier<br>long adjective：more + adjective，例如 more nutritious</div>
+    <div class="mission"><b>be going to</b><br>I am going to eat fruit.<br>She is going to exercise.<br>They are going to drink water.</div>
+    <div id="grammarQuiz"></div>
+  </div>
+  <div class="card">
+    <h2>🧩 Sentence Builder</h2>
+    <p id="sentenceTarget">目標句：Whole fruit is healthier than fruit juice.</p>
+    <div id="sentencePool"></div>
+    <div class="sentenceBox" id="sentenceBox"></div>
+    <button onclick="checkSentence()">檢查句子</button><button onclick="resetSentence()">重排</button>
+  </div>
+</section>
+
+<section id="boss" class="screen">
+  <div class="card">
+    <h2>👾 Boss Battle：Junk Food Monster</h2>
+    <div class="story">🍔 Junk Food Monster 出現！Doctor Panda 需要你用 Unit 3 的英文知識打敗牠。</div>
+    <h3>Boss HP</h3>
+    <div class="hp" id="bossHP"></div>
+    <div id="bossBox"></div>
+    <div id="victoryBox" style="display:none" class="reward">🎉 VICTORY!<br>🏅 Health Kingdom Hero<br>+100 Coins</div>
+  </div>
+</section>
+
+<section id="report" class="screen">
+  <div class="card">
+    <h2>👩 Mom Dashboard</h2>
+    <table>
+      <tr><th>項目</th><th>目前紀錄</th></tr>
+      <tr><td>XP</td><td id="dashXP"></td></tr>
+      <tr><td>Coins</td><td id="dashCoins"></td></tr>
+      <tr><td>Correct</td><td id="dashScore"></td></tr>
+      <tr><td>完成關卡</td><td id="dashDone"></td></tr>
+    </table>
+    <h3>測試時請觀察</h3>
+    <ul>
+      <li>她最喜歡：單字卡、食物分類、閱讀、拼音、文法、Boss 哪一個？</li>
+      <li>哪裡太簡單？哪裡太難？</li>
+      <li>她有沒有想再玩下一關？</li>
+      <li>有沒有再發現刷分 bug？</li>
+    </ul>
+    <button onclick="resetAll()">清除紀錄，重新開始</button>
+  </div>
+</section>
+</div>
+
+<script>
+const vocab=[
+["🥗","healthy","健康的","adjective","Healthy food is good for you."],
+["🍽️","portion","一份；份量","noun","A portion is the amount of food you eat."],
+["✅","choice","選擇","noun","Make healthy choices."],
+["💪","wellness","身心健康","noun","Exercise improves your wellness."],
+["🧠","nutrition","營養","noun","Good nutrition helps you stay healthy."],
+["🌈","variety","多樣性","noun","Eat a variety of foods."],
+["🧘","mind","心智；頭腦","noun","Exercise is healthy for your mind."],
+["📈","improve","改善；進步","verb","Exercise can improve your health."],
+["🔄","change","改變","verb/noun","You can change your habits."],
+["🌾","grain","穀物","noun","Rice and bread are grains."],
+["🍗","protein","蛋白質","noun","Eggs and fish have protein."],
+["🥛","dairy","乳製品","noun","Milk and cheese are dairy products."],
+["🏃","exercise","運動","verb/noun","I exercise every day."],
+["🍎","fruit","水果","noun","Apples are fruit."],
+["🥦","vegetable","蔬菜","noun","Broccoli is a vegetable."]
+];
+const areas=[
+["🏠 Healthy Village","單字與故事入口","vocab"],
+["🍎 Fruit Forest","水果、蔬菜與食物分類","food"],
+["📖 Blog Library","Healthy Choices 閱讀","reading"],
+["🔤 Long e Cave","e_e / ee / ea / y / ey","phonics"],
+["✏️ Grammar Academy","比較級與 be going to","grammar"],
+["👑 Wellness Castle","Boss Battle","boss"]
+];
+const foods=[
+["apple","🍎 apple","Fruits"],["banana","🍌 banana","Fruits"],["orange","🍊 orange","Fruits"],
+["broccoli","🥦 broccoli","Vegetables"],["carrot","🥕 carrot","Vegetables"],["corn","🌽 corn","Vegetables"],
+["rice","🍚 rice","Grains"],["bread","🍞 bread","Grains"],["cereal","🥣 cereal","Grains"],
+["egg","🥚 egg","Protein"],["fish","🐟 fish","Protein"],["beans","🫘 beans","Protein"],
+["milk","🥛 milk","Dairy"],["cheese","🧀 cheese","Dairy"],["yogurt","🍦 yogurt","Dairy"]
+];
+const reading=[
+["Welcome to my blog!","What kind of text is this?","blog"],
+["Wellness means taking care of your body and mind.","Wellness means taking care of your body and _____.","mind"],
+["Nutrition is healthy eating.","Nutrition is about healthy _____.","eating"],
+["Eat a variety of foods from the five food groups.","How many food groups are mentioned?","five"],
+["Whole fruit is healthier than fruit juice.","Which is healthier: whole fruit or fruit juice?","whole fruit"],
+["Exercise is healthy for your mind and body.","Exercise is healthy for your mind and _____.","body"]
+];
+const grammarQs=[
+["Whole fruit is ______ than fruit juice.",["healthier","healthy","more healthy"],"healthier",15],
+["I ______ going to eat vegetables.",["am","is","are"],"am",15],
+["She ______ going to exercise.",["am","is","are"],"is",15],
+["A salad is ______ than candy.",["healthier","healthy","healthiest"],"healthier",15],
+["They ______ going to drink water.",["am","is","are"],"are",15]
+];
+const bossTasks=[
+["Which is a dairy product?",["milk","rice","fish"],"milk",25],
+["Which food group is rice?",["Grains","Protein","Dairy"],"Grains",25],
+["Whole fruit is ______ than fruit juice.",["healthier","healthy","healthiest"],"healthier",25],
+["I am going to ______ water.",["drink","drinks","drinking"],"drink",25],
+["Which word is an adjective?",["healthy","nutrition","improve"],"healthy",25],
+["Which spelling has Long e?",["green","bread","weather"],"green",25]
+];
+let state=JSON.parse(localStorage.getItem("pea_alpha_state")||'{"xp":0,"coins":0,"score":0,"done":{},"claimed":{}}');
+let bossHP=150,currentSentence=[];
+function save(){localStorage.setItem("pea_alpha_state",JSON.stringify(state))}
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});update()}
+function init(){renderMap();renderVocab();renderFood();renderReading();renderPhonics();renderGrammar();renderBoss();resetSentence();update()}
+function renderMap(){document.getElementById("worldMap").innerHTML=areas.map(a=>`<div class="mapTile ${state.done[a[2]]?'done':''}"><div style="font-size:48px">${a[0].split(" ")[0]}</div><h3>${a[0]}</h3><p>${a[1]}</p><button onclick="show('${a[2]}')">${state.done[a[2]]?'複習':'進入'} ▶</button></div>`).join("")}
+function tagClass(pos){return pos.includes("verb")?"verb":pos==="adjective"?"adjective":pos==="adverb"?"adverb":"noun"}
+function renderVocab(){document.getElementById("vocabGrid").innerHTML=vocab.map(v=>`<div class="word"><div class="emoji">${v[0]}</div><div class="en">${v[1]}</div><span class="tag ${tagClass(v[3])}">${v[3]}</span><p class="zh">${v[2]}<br>${v[4]}</p><button onclick="speak('${safe(v[1])}')">🔊 單字</button><button onclick="speak('${safe(v[4])}')">句子</button></div>`).join("")}
+function renderFood(){document.getElementById("foodTiles").innerHTML=foods.map(f=>`<span class="tile foodTile" draggable="true" data-key="${f[0]}" data-group="${f[2]}">${f[1]}</span>`).join("");document.getElementById("foodZones").innerHTML=["Fruits","Vegetables","Grains","Protein","Dairy"].map(g=>`<div class="dropzone foodZone" data-accept="${g}">${g}</div>`).join("");setupFoodDrag()}
+function renderReading(){document.getElementById("readingBox").innerHTML=reading.map((r,i)=>`<div class="quest"><b>Sentence ${i+1}</b><div class="story">${r[0]}</div><button onclick="speak('${safe(r[0])}')">🔊 聽句子</button><p>${r[1]}</p><input id="read${i}" placeholder="type answer"><button onclick="checkText('read${i}','${safe(r[2])}',20,'reading_${i}')">檢查</button></div>`).join("")}
+function renderPhonics(){let items=[["tree","ee"],["green","ee"],["feet","ee"],["teacher","ea"],["beach","ea"],["eat","ea"],["complete","e_e"],["athlete","e_e"],["happy","y"],["healthy","y"],["key","ey"],["money","ey"]];document.getElementById("phonicsTiles").innerHTML=items.map(i=>`<span class="tile phTile" draggable="true" data-key="${i[0]}" data-rule="${i[1]}">${i[0]}</span>`).join("");document.getElementById("phonicsZones").innerHTML=["ee","ea","e_e","y","ey"].map(g=>`<div class="dropzone phZone" data-accept="${g}">${g}</div>`).join("");setupPhonicsDrag()}
+function renderGrammar(){document.getElementById("grammarQuiz").innerHTML=grammarQs.map((q,i)=>`<div class="quest"><b>${q[0]}</b><br>${q[1].map(c=>`<button class="choice" onclick="checkChoice(this,'${safe(c)}','${safe(q[2])}',${q[3]},'grammar_${i}_${safe(c)}')">${c}</button>`).join("")}</div>`).join("")}
+function renderBoss(){bossHP=150;document.getElementById("bossBox").innerHTML=bossTasks.map((t,i)=>`<div class="mission"><b>${t[0]}</b><br>${t[1].map(c=>`<button class="choice" onclick="bossHit(this,'${safe(c)}','${safe(t[2])}',${t[3]},'boss_${i}')">${c}</button>`).join("")}</div>`).join("");document.getElementById("victoryBox").style.display="none";drawHP()}
+function setupFoodDrag(){document.querySelectorAll(".foodTile").forEach(t=>t.addEventListener("dragstart",e=>{e.dataTransfer.setData("key",t.dataset.key);e.dataTransfer.setData("group",t.dataset.group)}));document.querySelectorAll(".foodZone").forEach(z=>{z.addEventListener("dragover",e=>e.preventDefault());z.addEventListener("drop",e=>{e.preventDefault();let key=e.dataTransfer.getData("key"),group=e.dataTransfer.getData("group");let claim="food_"+key;if(state.claimed[claim]){toast("這個食物已經配對過了");return}if(group===z.dataset.accept){state.claimed[claim]=true;state.score++;z.innerHTML+=" ✅ "+key;award(12,"Food group correct! +12 XP");let tile=[...document.querySelectorAll(".foodTile")].find(t=>t.dataset.key===key);if(tile){tile.style.opacity=.35;tile.draggable=false}save();update()}else toast("不是這個分類，再試一次")})})}
+function setupPhonicsDrag(){document.querySelectorAll(".phTile").forEach(t=>t.addEventListener("dragstart",e=>{e.dataTransfer.setData("key",t.dataset.key);e.dataTransfer.setData("rule",t.dataset.rule)}));document.querySelectorAll(".phZone").forEach(z=>{z.addEventListener("dragover",e=>e.preventDefault());z.addEventListener("drop",e=>{e.preventDefault();let key=e.dataTransfer.getData("key"),rule=e.dataTransfer.getData("rule");let claim="phonics_"+key;if(state.claimed[claim]){toast("這個單字已經配對過了");return}if(rule===z.dataset.accept){state.claimed[claim]=true;state.score++;z.innerHTML+=" ✅ "+key;award(15,"Long e match! +15 XP");let tile=[...document.querySelectorAll(".phTile")].find(t=>t.dataset.key===key);if(tile){tile.style.opacity=.35;tile.draggable=false}save();update()}else toast("不是這個拼音籃")})})}
+function checkChoice(btn,c,a,pts,key){if(btn.dataset.done)return;btn.dataset.done=1;if(c===a){btn.classList.add("correct");if(!state.claimed[key]){state.claimed[key]=true;state.score++;award(pts,"Correct! +"+pts+" XP")}}else{btn.classList.add("wrong");toast("再想一下！")}save();update()}
+function checkText(id,a,pts,key){let el=document.getElementById(id);if(el.dataset.done)return;let ans=el.value.trim().toLowerCase();if(ans.includes(a.toLowerCase())){el.style.borderColor="#22c55e";el.dataset.done=1;if(!state.claimed[key]){state.claimed[key]=true;state.score++;award(pts,"Reading correct! +"+pts+" XP")}}else{el.style.borderColor="#ef4444";toast("提示：回去看句子")};save();update()}
+function bossHit(btn,c,a,dmg,key){if(btn.dataset.done)return;btn.dataset.done=1;if(c===a){btn.classList.add("correct");if(!state.claimed[key]){state.claimed[key]=true;state.score++;bossHP=Math.max(0,bossHP-dmg);award(25,"Critical hit! -"+dmg+" HP");drawHP();if(bossHP===0){state.done.boss=true;state.coins+=100;document.getElementById("victoryBox").style.display="block";confetti();toast("Boss defeated! +100 coins")}}}else{btn.classList.add("wrong");toast("Boss 擋下攻擊！")}save();update()}
+function drawHP(){document.getElementById("bossHP").textContent="❤️".repeat(Math.max(0,Math.ceil(bossHP/15)))+" HP "+bossHP}
+function awardOnce(key,n,msg,btn){if(state.claimed[key]){toast("已領過獎勵");return}state.claimed[key]=true;if(btn){btn.disabled=true;btn.textContent="已完成 ✅"}award(n,msg);save();update()}
+function award(n,msg){state.xp+=n;state.coins+=Math.floor(n/5);toast(msg||("+"+n+" XP"));save();update()}
+function speak(t){let u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.86;u.pitch=1.02;speechSynthesis.speak(u)}
+function resetSentence(){currentSentence=[];const words=["Whole","fruit","is","healthier","than","fruit","juice."];document.getElementById("sentencePool").innerHTML=words.map(w=>`<button class="choice sentBtn" onclick="addWord(this)">${w}</button>`).join("");document.getElementById("sentenceBox").textContent=""}
+function addWord(btn){currentSentence.push(btn.textContent);btn.disabled=true;btn.style.opacity=.45;document.getElementById("sentenceBox").textContent=currentSentence.join(" ")}
+function checkSentence(){let s=currentSentence.join(" ");let key="sentence_compare";if(s==="Whole fruit is healthier than fruit juice."){if(state.claimed[key]){toast("這句已經完成過了");return}state.claimed[key]=true;state.score++;award(30,"Sentence complete! +30 XP");document.querySelectorAll(".sentBtn").forEach(b=>b.disabled=true)}else toast("再排一次，注意順序")}
+function update(){document.getElementById("xp").textContent=state.xp;document.getElementById("coins").textContent=state.coins;document.getElementById("score").textContent=state.score;document.getElementById("level").textContent=Math.floor(state.xp/300)+1;document.getElementById("bar").style.width=Math.min(100,(state.xp%300)/3)+"%";document.getElementById("dashXP").textContent=state.xp;document.getElementById("dashCoins").textContent=state.coins;document.getElementById("dashScore").textContent=state.score;document.getElementById("dashDone").textContent=Object.keys(state.done).join(", ")||"尚未完成 Boss";renderMap()}
+function toast(msg){let t=document.createElement("div");t.className="toast";t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),1500)}
+function confetti(){let c=document.createElement("div");c.className="confetti";c.innerHTML=Array(65).fill(0).map(()=>`<span style="position:absolute;left:${Math.random()*100}%;top:-5%;animation:fall ${2+Math.random()*2}s linear forwards">${["🎉","⭐","🥗","🏆","✨"][Math.floor(Math.random()*5)]}</span>`).join("");let st=document.createElement("style");st.textContent="@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.15}}";document.body.appendChild(st);document.body.appendChild(c);setTimeout(()=>{c.remove();st.remove()},4000)}
+function resetAll(){localStorage.removeItem("pea_alpha_state");location.reload()}
+function safe(s){return String(s).replace(/'/g,"\\'")}
+init();
+</script>
+</body>
+</html>
