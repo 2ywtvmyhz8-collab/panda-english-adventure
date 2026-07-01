@@ -1,5 +1,2 @@
-# Panda English Adventure
-
-Unit 3 Health Kingdom alpha version.
-
-Upload `index.html` to GitHub and enable GitHub Pages.
+# Panda English Adventure v0.2
+Upload index.html to GitHub Pages.
