@@ -1,83 +1,74 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Panda English Adventure v0.2</title>
-<style>
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",Arial,sans-serif;background:linear-gradient(#e0f7ff,#fff7df);color:#1f2937}
-nav{position:sticky;top:0;background:#ffffffdd;backdrop-filter:blur(10px);padding:10px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid #ddd}
-button{border:0;border-radius:15px;padding:11px 14px;margin:4px;background:#2563eb;color:white;font-weight:900;cursor:pointer}
-button:disabled{opacity:.45}.choice{background:white;color:#1f2937;border:2px solid #cbd5e1}.correct{background:#16a34a!important;color:white!important}.wrong{background:#ef4444!important;color:white!important}
-.wrap{max-width:1120px;margin:auto;padding:18px}.screen{display:none}.active{display:block}
-.hero,.card{background:#ffffffee;border-radius:28px;padding:24px;margin:18px 0;box-shadow:0 10px 28px #0001}
-.hero{background:linear-gradient(135deg,#ffec99,#ffd6e8 48%,#c5f6fa);position:relative;overflow:hidden}
-.hero h1{font-size:42px;margin:0;color:#be185d}.hero p{font-size:18px;line-height:1.6}.panda{position:absolute;right:28px;top:28px;font-size:92px}
-.stat{display:inline-block;background:white;border-radius:999px;padding:10px 14px;margin:5px;font-weight:900}
-.progress{height:22px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin-top:12px}.bar{height:100%;width:0;background:linear-gradient(90deg,#22c55e,#facc15,#ec4899)}
-h2{color:#087f8c;margin-top:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
-.tilecard{background:white;border:3px solid #e0f2fe;border-radius:22px;padding:16px;text-align:center}.done{border-color:#22c55e;background:#f0fdf4}
-.emoji{font-size:54px}.en{font-size:24px;font-weight:900}.small{color:#667085;font-size:14px;line-height:1.5}
-.quest{background:#eff6ff;border:3px solid #dbeafe;border-radius:20px;padding:16px;margin:12px 0}.mission{background:#f0fdf4;border:3px solid #bbf7d0;border-radius:20px;padding:16px;margin:12px 0}
-.story{background:#fffbeb;border-left:8px solid #facc15;border-radius:18px;padding:16px;font-size:18px;line-height:1.8}
-.drag{display:inline-block;background:white;border:2px solid #94a3b8;border-radius:14px;padding:10px 14px;margin:7px;font-weight:900;cursor:grab}
-.zone{display:inline-flex;align-items:center;justify-content:center;min-height:86px;min-width:170px;border:3px dashed #94a3b8;border-radius:18px;background:#f8fafc;margin:8px;font-weight:900;vertical-align:top}
-input{font-size:17px;padding:12px;border:2px solid #cbd5e1;border-radius:12px;width:min(500px,100%)}
-.hp{font-size:30px}.toast{position:fixed;right:18px;bottom:18px;background:#111827;color:white;padding:14px 18px;border-radius:16px;font-weight:900;z-index:999}
-table{width:100%;border-collapse:collapse;background:white}td,th{border:1px solid #ddd;padding:10px;text-align:left}th{background:#f8fafc}
-@media(max-width:720px){.panda{position:static}.hero h1{font-size:32px}.wrap{padding:10px}.card,.hero{padding:17px;border-radius:22px}}
-</style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Panda English Adventure V0.2</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<nav>
-<button onclick="show('home')">🏠 首頁</button><button onclick="show('map')">🗺 地圖</button><button onclick="show('daily')">🔥 任務</button><button onclick="show('cards')">🎴 單字</button><button onclick="show('food')">🍽 分類</button><button onclick="show('reading')">📖 閱讀</button><button onclick="show('phonics')">🔤 拼音</button><button onclick="show('grammar')">✏️ 文法</button><button onclick="show('boss')">👾 Boss</button><button onclick="show('home2')">🏠 小屋</button><button onclick="show('mom')">👩 媽媽</button>
-</nav>
-<div class="wrap">
-<section id="home" class="screen active"><div class="hero"><div class="panda">🐼✨</div><h1>Panda English Adventure</h1><p><b>v0.2｜Health Kingdom</b><br>用目前 Unit 3 資料製作：Healthy Choices、Food Groups、Long e、比較級、be going to、PB 練習。</p><span class="stat">⭐ XP <span id="xp">0</span></span><span class="stat">💰 Coins <span id="coins">0</span></span><span class="stat">🎚 Level <span id="level">1</span></span><span class="stat">✅ Correct <span id="correct">0</span></span><div class="progress"><div class="bar" id="bar"></div></div></div><div class="card"><h2>🐼 Doctor Panda</h2><div class="story">Little Fox 和 Eva 需要你的幫忙。完成任務，打敗 Junk Food Monster，解鎖 Health Hero！</div><button onclick="show('daily')">開始今日任務 ▶</button></div></section>
-<section id="map" class="screen"><div class="card"><h2>🗺 Health Kingdom</h2><div class="grid2" id="mapBox"></div></div></section>
-<section id="daily" class="screen"><div class="card"><h2>🔥 Daily Quest</h2><div id="dailyBox"></div></div></section>
-<section id="cards" class="screen"><div class="card"><h2>🎴 Word Cards</h2><div class="grid" id="cardBox"></div></div></section>
-<section id="food" class="screen"><div class="card"><h2>🍽 Food Group Drag</h2><p class="small">拖到正確分類，每個食物只能加分一次。</p><div id="foodTiles"></div><div id="foodZones"></div></div><div class="card"><h2>🥗 Healthy Choices</h2><div id="healthyQuiz"></div></div></section>
-<section id="reading" class="screen"><div class="card"><h2>📖 Reading Adventure</h2><div id="readingBox"></div></div></section>
-<section id="phonics" class="screen"><div class="card"><h2>🔤 Long e Lab</h2><div id="phonicsBox"></div></div></section>
-<section id="grammar" class="screen"><div class="card"><h2>✏️ Grammar Battle</h2><div id="grammarBox"></div></div></section>
-<section id="boss" class="screen"><div class="card"><h2>👾 Junk Food Monster</h2><div class="story">用英文知識攻擊 Boss。答對扣血。</div><h3 id="hp"></h3><div id="bossBox"></div><div id="victory" style="display:none;font-size:30px;text-align:center;background:#fff0f6;border-radius:24px;padding:18px">🏆 Victory! Health Hero Badge 解鎖！</div></div></section>
-<section id="home2" class="screen"><div class="card"><h2>🏠 Panda Home</h2><p class="small">v0.2 新增：coins 可以買小屋裝飾。</p><div class="grid" id="shopBox"></div></div></section>
-<section id="mom" class="screen"><div class="card"><h2>👩 Mom Dashboard</h2><table><tr><th>項目</th><th>狀態</th></tr><tr><td>XP</td><td id="mxp"></td></tr><tr><td>Coins</td><td id="mcoins"></td></tr><tr><td>Correct</td><td id="mcorrect"></td></tr><tr><td>完成</td><td id="mdone"></td></tr></table><button onclick="resetAll()">清除紀錄</button></div></section>
-</div>
-<script>
-let S=JSON.parse(localStorage.getItem('pea_v02')||'{"xp":0,"coins":0,"correct":0,"claimed":{},"done":{},"owned":{}}');
-let hp=180;
-const cards=[["🥗","healthy","健康的","Healthy foods are good for you."],["🍽️","portion","份量","This is a large portion of rice."],["✅","choice","選擇","Make healthy choices."],["💪","wellness","身心健康","Wellness means eating well and exercising."],["🧠","nutrition","營養","Good nutrition means healthy eating."],["🌈","variety","多樣性","Eat a variety of foods."],["📈","improve","改善","Small changes improve wellness."],["🌾","whole grain","全穀","Whole grains are better than refined grains."],["🍗","protein","蛋白質","Proteins help you grow."],["🥛","dairy","乳製品","Dairy has protein and calcium."],["🏃","exercise","運動","Exercise is healthy for your body and mind."],["🍿","rhyme","押韻","Rhyme means words have the same sound."]];
-const foods=[["apple","🍎 apple","Fruits"],["banana","🍌 banana","Fruits"],["spinach","🥬 spinach","Vegetables"],["carrot","🥕 carrot","Vegetables"],["rice","🍚 rice","Grains"],["bread","🍞 bread","Grains"],["egg","🥚 egg","Protein"],["fish","🐟 fish","Protein"],["milk","🥛 milk","Dairy"],["cheese","🧀 cheese","Dairy"]];
-const reading=[["Welcome to my blog! This is my little sister. Her name is Eva.","Who is Eva?","little sister"],["She likes big portions of salty snacks.","What kind of snacks?","salty"],["Whole fruit is healthier than fruit juice.","Which is healthier?","whole fruit"],["Exercise is healthy for your mind and body.","Exercise is healthy for mind and _____.","body"]];
-const grammar=[["Whole fruit is ______ than fruit juice.",["healthier","healthy","healthiest"],"healthier"],["I ______ going to eat fruit.",["am","is","are"],"am"],["She ______ going to exercise.",["am","is","are"],"is"],["good 的比較級是？",["better","gooder","best"],"better"]];
-const boss=[["Which is dairy?",["milk","rice","fish"],"milk"],["Which is protein?",["beans","orange","bread"],"beans"],["Which has long e?",["green","bread","weather"],"green"],["I am going to ___ water.",["drink","drinks","drinking"],"drink"],["Which is healthier?",["whole fruit","fruit juice","candy"],"whole fruit"],["bad 的比較級是？",["worse","badder","worst"],"worse"]];
-function save(){localStorage.setItem('pea_v02',JSON.stringify(S))}
-function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);update()}
-function render(){
-document.getElementById('mapBox').innerHTML=[['🏠','Healthy Village','cards'],['🍎','Fruit Forest','food'],['📖','Blog Library','reading'],['🔤','Long e Cave','phonics'],['✏️','Grammar Academy','grammar'],['🏠','Panda Home','home2'],['👑','Wellness Castle','boss']].map(x=>`<div class="tilecard ${S.done[x[2]]?'done':''}"><div class="emoji">${x[0]}</div><h3>${x[1]}</h3><button onclick="show('${x[2]}')">進入 ▶</button></div>`).join('');
-document.getElementById('dailyBox').innerHTML=[['card','學單字',35],['food','做分類',35],['read','讀文章',35],['boss','打 Boss',50]].map(x=>`<div class="mission"><b>${x[1]}</b><br><button onclick="once('daily_${x[0]}',${x[2]},this)">完成 +${x[2]} XP</button></div>`).join('');
-document.getElementById('cardBox').innerHTML=cards.map((c,i)=>`<div class="tilecard"><div class="emoji">${c[0]}</div><div class="en">${c[1]}</div><p>${c[2]}<br>${c[3]}</p><button onclick="speak('${c[1]}')">🔊</button><button onclick="once('card_${i}',8,this)">學會</button></div>`).join('');
-renderFood();renderReading();renderPhonics();renderGrammar();renderBoss();renderShop();update()
-}
-function renderFood(){document.getElementById('foodTiles').innerHTML=foods.map(f=>`<span class="drag food" draggable="true" data-key="${f[0]}" data-group="${f[2]}">${f[1]}</span>`).join('');document.getElementById('foodZones').innerHTML=['Fruits','Vegetables','Grains','Protein','Dairy'].map(g=>`<div class="zone fzone" data-accept="${g}">${g}</div>`).join('');drag('.food','.fzone','group','food_',12);document.getElementById('healthyQuiz').innerHTML=[['Which is healthier?',['salad','fries'],'salad'],['Which is better?',['whole grains','refined grains'],'whole grains']].map((q,i)=>`<div class="quest"><b>${q[0]}</b><br>${q[1].map(a=>`<button class="choice" onclick="choice(this,'${a}','${q[2]}',15,'hq${i}${a}')">${a}</button>`).join('')}</div>`).join('')}
-function renderReading(){document.getElementById('readingBox').innerHTML=reading.map((r,i)=>`<div class="quest"><div class="story">${r[0]}</div><button onclick="speak('${r[0]}')">🔊 聽句子</button><p>${r[1]}</p><input id="r${i}"><button onclick="text('r${i}','${r[2]}',20,'r${i}')">檢查</button></div>`).join('')}
-function renderPhonics(){let items=[['green','ee'],['tree','ee'],['teacher','ea'],['beach','ea'],['complete','e_e'],['healthy','y'],['key','ey'],['money','ey']];document.getElementById('phonicsBox').innerHTML='<div>'+items.map(i=>`<span class="drag ph" draggable="true" data-key="${i[0]}" data-rule="${i[1]}">${i[0]}</span>`).join('')+'</div><div>'+['ee','ea','e_e','y','ey'].map(g=>`<div class="zone pzone" data-accept="${g}">${g}</div>`).join('')+'</div>';drag('.ph','.pzone','rule','ph_',14)}
-function renderGrammar(){document.getElementById('grammarBox').innerHTML=grammar.map((g,i)=>`<div class="quest"><b>${g[0]}</b><br>${g[1].map(a=>`<button class="choice" onclick="choice(this,'${a}','${g[2]}',16,'g${i}${a}')">${a}</button>`).join('')}</div>`).join('')}
-function renderBoss(){hp=180;document.getElementById('bossBox').innerHTML=boss.map((b,i)=>`<div class="mission"><b>${b[0]}</b><br>${b[1].map(a=>`<button class="choice" onclick="hit(this,'${a}','${b[2]}',30,'b${i}')">${a}</button>`).join('')}</div>`).join('');drawHP()}
-function renderShop(){let items=[['plant','🪴 Plant',40],['hat','🎩 Hat',80],['puppy','🐶 Puppy',100]];document.getElementById('shopBox').innerHTML=items.map(i=>`<div class="tilecard ${S.owned[i[0]]?'done':''}"><div class="emoji">${i[1].split(' ')[0]}</div><h3>${i[1]}</h3><p>${i[2]} coins</p><button onclick="buy('${i[0]}',${i[2]})">${S.owned[i[0]]?'已擁有':'購買'}</button></div>`).join('')}
-function drag(ts,zs,attr,prefix,pts){document.querySelectorAll(ts).forEach(t=>t.addEventListener('dragstart',e=>{e.dataTransfer.setData('k',t.dataset.key);e.dataTransfer.setData('v',t.dataset[attr])}));document.querySelectorAll(zs).forEach(z=>{z.addEventListener('dragover',e=>e.preventDefault());z.addEventListener('drop',e=>{let k=e.dataTransfer.getData('k'),v=e.dataTransfer.getData('v'),key=prefix+k;if(S.claimed[key])return toast('已完成過');if(v===z.dataset.accept){S.claimed[key]=1;S.correct++;z.innerHTML+=' ✅ '+k;award(pts)}else toast('再試一次')})})}
-function choice(btn,a,ans,pts,key){if(btn.dataset.done)return;btn.dataset.done=1;if(a===ans){btn.classList.add('correct');once(key,pts,btn)}else{btn.classList.add('wrong');toast('再想一下')}}
-function text(id,ans,pts,key){let e=document.getElementById(id);if(e.value.toLowerCase().includes(ans.toLowerCase())){e.style.borderColor='#16a34a';once(key,pts,e)}else{e.style.borderColor='#ef4444';toast('提示：看句子')}}
-function hit(btn,a,ans,dmg,key){if(btn.dataset.done)return;btn.dataset.done=1;if(a===ans&&!S.claimed[key]){btn.classList.add('correct');S.claimed[key]=1;S.correct++;hp=Math.max(0,hp-dmg);award(24);drawHP();if(hp===0&&!S.done.boss){S.done.boss=1;S.coins+=120;document.getElementById('victory').style.display='block';toast('Boss defeated +120 coins')}}else if(a!==ans){btn.classList.add('wrong');toast('Boss 防禦成功')}}
-function once(key,pts,btn){if(S.claimed[key])return toast('已領過');S.claimed[key]=1;S.correct++;if(btn)btn.disabled=true;award(pts)}
-function award(n){S.xp+=n;S.coins+=Math.floor(n/5);save();update();toast('+'+n+' XP')}
-function drawHP(){document.getElementById('hp').textContent='❤️'.repeat(Math.ceil(hp/30))+' HP '+hp}
-function buy(k,p){if(S.owned[k])return toast('已擁有');if(S.coins<p)return toast('金幣不夠');S.coins-=p;S.owned[k]=1;save();renderShop();update();toast('購買成功')}
-function speak(t){let u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.86;speechSynthesis.speak(u)}
-function update(){let lv=Math.floor(S.xp/300)+1;document.getElementById('xp').textContent=S.xp;document.getElementById('coins').textContent=S.coins;document.getElementById('level').textContent=lv;document.getElementById('correct').textContent=S.correct;document.getElementById('bar').style.width=Math.min(100,(S.xp%300)/3)+'%';document.getElementById('mxp').textContent=S.xp;document.getElementById('mcoins').textContent=S.coins;document.getElementById('mcorrect').textContent=S.correct;document.getElementById('mdone').textContent=Object.keys(S.done).join(', ')||'尚未完成'}
-function toast(m){let t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1400)}
-function resetAll(){localStorage.removeItem('pea_v02');location.reload()}
-render();
-</script></body></html>
+<header class="topbar">
+  <button onclick="go('home')">🏠 首頁</button>
+  <button onclick="go('today')">🔥 今日</button>
+  <button onclick="go('vocab')">🎴 單字</button>
+  <button onclick="go('food')">🍽 食物</button>
+  <button onclick="go('reading')">📖 閱讀</button>
+  <button onclick="go('phonics')">🔤 拼音</button>
+  <button onclick="go('grammar')">✏️ 文法</button>
+  <button onclick="go('animals')">🦁 動物</button>
+  <button onclick="go('boss')">👾 Boss</button>
+  <button onclick="go('parent')">👩 媽媽</button>
+</header>
+
+<main>
+<section id="home" class="screen active">
+  <div class="hero">
+    <div class="panda">🐼</div>
+    <h1>Panda English Adventure</h1>
+    <h3>V0.2 Mobile Edition｜手機優先版</h3>
+    <p>這版修正手機不能拖曳的問題。所有遊戲都改成「點選式」，iPhone、iPad、Mac 都能玩。</p>
+    <div class="stats">
+      <span>⭐ XP <b id="xpA">0</b></span>
+      <span>💰 Coins <b id="coinA">0</b></span>
+      <span>✅ Correct <b id="correctA">0</b></span>
+      <span>🎚 Level <b id="levelA">1</b></span>
+    </div>
+    <div class="bar"><i id="barA"></i></div>
+    <button class="big" onclick="go('today')">開始今日冒險 ▶</button>
+  </div>
+  <div class="card">
+    <h2>這版重點</h2>
+    <div class="grid">
+      <div class="mini">📱<b>手機可玩</b><small>取消拖曳，全部改點選。</small></div>
+      <div class="mini">🧠<b>複習雛形</b><small>新課＋複習＋Boss。</small></div>
+      <div class="mini">🦁<b>動物補充</b><small>加入 7/1 老師筆記。</small></div>
+      <div class="mini">👩<b>媽媽後台</b><small>查看完成度與錯題。</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="today" class="screen">
+  <div class="card">
+    <h2>🔥 Today's Adventure</h2>
+    <p class="note">建議每天 15–20 分鐘：新進度 70%、複習 20%、延伸 10%。</p>
+    <div id="todayList"></div>
+  </div>
+</section>
+
+<section id="vocab" class="screen"><div class="card"><h2>🎴 Unit 3 單字卡</h2><div id="vocabBox" class="grid cards"></div></div></section>
+<section id="food" class="screen">
+  <div class="card"><h2>🍽 Food Group 點選配對</h2><p class="note">先看食物，再點分類。這版不用拖曳。</p><div id="foodItem" class="focus"></div><div id="foodChoices" class="choices"></div></div>
+  <div class="card"><h2>🥗 Healthy or Unhealthy</h2><div id="healthyBox"></div></div>
+</section>
+<section id="reading" class="screen"><div class="card"><h2>📖 Reading：Healthy Choices</h2><div id="readingBox"></div></div></section>
+<section id="phonics" class="screen"><div class="card"><h2>🔤 Long e Lab</h2><p class="note">選出 long e 的拼法：ee / ea / e_e / y / ey。</p><div id="phonicsBox"></div></div></section>
+<section id="grammar" class="screen"><div class="card"><h2>✏️ Grammar：Comparatives / be going to</h2><div id="grammarBox"></div></div></section>
+<section id="animals" class="screen"><div class="card"><h2>🦁 Animal Kingdom｜老師 7/1 筆記</h2><p class="note">Collective nouns + animal classification。</p><div id="animalBox"></div></div></section>
+<section id="boss" class="screen"><div class="card boss"><h2>👾 Junk Food Monster</h2><p>答對讓 Boss 掉血。答錯不扣分，但 Boss 會防禦。</p><div class="hp">HP：<span id="hpBox"></span></div><div id="bossBox"></div><div id="winBox" class="win hidden">🏆 Victory! 得到 Health Hero Badge +120 coins</div></div></section>
+<section id="parent" class="screen"><div class="card"><h2>👩 Mom Dashboard</h2><table><tr><th>項目</th><th>目前紀錄</th></tr><tr><td>XP</td><td id="pXp">0</td></tr><tr><td>Coins</td><td id="pCoin">0</td></tr><tr><td>Correct</td><td id="pCorrect">0</td></tr><tr><td>已完成任務</td><td id="pDone"></td></tr><tr><td>錯題觀察</td><td id="pWrong"></td></tr></table><button class="danger" onclick="resetGame()">清除紀錄，重新開始</button></div></section>
+</main>
+
+<div id="toast"></div>
+<script src="game.js"></script>
+</body>
+</html>
