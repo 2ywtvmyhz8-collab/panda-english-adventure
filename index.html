@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Panda English Adventure V0.2.1</title>
+<title>Panda English Adventure V0.3</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -16,6 +16,7 @@
   <button onclick="go('phonics')">🔤 拼音</button>
   <button onclick="go('grammar')">✏️ 文法</button>
   <button onclick="go('animals')">🦁 動物</button>
+  <button onclick="go('review')">🔁 錯題箱</button>
   <button onclick="go('boss')">👾 Boss</button>
   <button onclick="go('parent')">👩 媽媽</button>
 </header>
@@ -25,8 +26,8 @@
   <div class="hero">
     <div class="panda">🐼</div>
     <h1>Panda English Adventure</h1>
-    <h3>V0.2.1｜破關流程修正版</h3>
-    <p>修正：Food Group 完成一輪後不再無限重複。完成後會出現破關、下一關、練習模式。</p>
+    <h3>V0.3｜Anti-Guess Learning Edition</h3>
+    <p>這版重點：不能靠亂按過關。答錯會鎖住選項、給提示、降低星星，錯題會進入 Review Box 再練一次。</p>
     <div class="stats">
       <span>⭐ XP <b id="xpA">0</b></span>
       <span>💰 Coins <b id="coinA">0</b></span>
@@ -36,10 +37,19 @@
     <div class="bar"><i id="barA"></i></div>
     <button class="big" onclick="go('today')">開始今日冒險 ▶</button>
   </div>
+  <div class="card">
+    <h2>V0.3 新規則</h2>
+    <div class="grid">
+      <div class="mini">🚫<b>防亂猜</b><small>答錯的選項會鎖住，不能一直亂點。</small></div>
+      <div class="mini">💡<b>提示系統</b><small>第二次錯才給提示，不直接公布答案。</small></div>
+      <div class="mini">⭐<b>三星評分</b><small>第一次答對 3 星；錯越多星越少。</small></div>
+      <div class="mini">🔁<b>錯題箱</b><small>錯過的題目會再出現，直到複習。</small></div>
+    </div>
+  </div>
 </section>
 
 <section id="today" class="screen">
-  <div class="card"><h2>🔥 Today's Adventure</h2><p class="note">先新課，再複習，最後 Boss。</p><div id="todayList"></div></div>
+  <div class="card"><h2>🔥 Today's Adventure</h2><p class="note">今天流程：新課 → 複習 → 老師補充 → Boss。</p><div id="todayList"></div></div>
 </section>
 
 <section id="vocab" class="screen"><div class="card"><h2>🎴 Unit 3 單字卡</h2><div id="vocabBox" class="grid cards"></div></div></section>
@@ -47,8 +57,9 @@
 <section id="food" class="screen">
   <div class="card">
     <h2>🍽 Food Group 點選配對</h2>
-    <p class="note">先看食物，再點分類。完成一輪後會破關，不會無限重複。</p>
+    <p class="note">先看食物，再點分類。答錯會鎖住該選項；第二次錯才給提示。</p>
     <div id="foodItem" class="focus"></div>
+    <div id="foodHint" class="hint hidden"></div>
     <div id="foodChoices" class="choices"></div>
     <div id="foodDone" class="win hidden"></div>
   </div>
@@ -59,10 +70,21 @@
 <section id="phonics" class="screen"><div class="card"><h2>🔤 Long e Lab</h2><div id="phonicsBox"></div></div></section>
 <section id="grammar" class="screen"><div class="card"><h2>✏️ Grammar</h2><div id="grammarBox"></div></div></section>
 <section id="animals" class="screen"><div class="card"><h2>🦁 Animal Kingdom</h2><div id="animalBox"></div></div></section>
-<section id="boss" class="screen"><div class="card boss"><h2>👾 Junk Food Monster</h2><div class="hp">HP：<span id="hpBox"></span></div><div id="bossBox"></div><div id="winBox" class="win hidden">🏆 Victory! 得到 Health Hero Badge +120 coins</div></div></section>
+<section id="review" class="screen"><div class="card"><h2>🔁 Review Box 錯題箱</h2><p class="note">答錯過的題目會出現在這裡。完成複習不會立刻刪除紀錄，但會標記已複習。</p><div id="reviewBox"></div></div></section>
+<section id="boss" class="screen"><div class="card boss"><h2>👾 Junk Food Monster</h2><p class="note">Boss 也套用防亂猜規則。</p><div class="hp">HP：<span id="hpBox"></span></div><div id="bossBox"></div><div id="winBox" class="win hidden">🏆 Victory! 得到 Health Hero Badge +120 coins</div></div></section>
 
 <section id="parent" class="screen">
-  <div class="card"><h2>👩 Mom Dashboard</h2><table><tr><th>項目</th><th>目前紀錄</th></tr><tr><td>XP</td><td id="pXp">0</td></tr><tr><td>Coins</td><td id="pCoin">0</td></tr><tr><td>Correct</td><td id="pCorrect">0</td></tr><tr><td>已完成任務</td><td id="pDone"></td></tr><tr><td>錯題觀察</td><td id="pWrong"></td></tr></table><button class="danger" onclick="resetGame()">清除紀錄，重新開始</button></div>
+  <div class="card"><h2>👩 Mom Dashboard</h2>
+  <table>
+    <tr><th>項目</th><th>目前紀錄</th></tr>
+    <tr><td>XP</td><td id="pXp">0</td></tr>
+    <tr><td>Coins</td><td id="pCoin">0</td></tr>
+    <tr><td>Correct</td><td id="pCorrect">0</td></tr>
+    <tr><td>完成項目</td><td id="pDone"></td></tr>
+    <tr><td>錯題觀察</td><td id="pWrong"></td></tr>
+    <tr><td>星星表現</td><td id="pStars"></td></tr>
+  </table>
+  <button class="danger" onclick="resetGame()">清除紀錄，重新開始</button></div>
 </section>
 </main>
 
