@@ -1,16 +1,16 @@
-# Fox Academy V2.0 Beta
+# Fox Academy V2.0.1 Fixed
 
-修正重點：
-- Review Cave 不再只是「我已複習」按鈕，必須實際答題才算複習成功。
-- 收藏館有完整 Collection Database，未收藏顯示問號，已收藏可打開百科卡與發音。
-- 答對冒險題會收集卡片；答錯會進 Review Cave。
-- 新增冒險背包：顯示卡片與徽章。
-- 狐狸小屋家具會真的顯示在房間裡。
-- 保留選項洗牌、防亂猜、提示、星星、寶箱與動畫。
+本版修正：
+- Review Cave 移除「我已複習」按鈕，改成必須實際答題。
+- Boss Tower 恢復完整頁面與題目。
+- 答錯進 Review Cave，答對才能標記複習成功。
+- 收藏館仍有完整資料庫，已收藏可開百科與發音。
+
+重要：
+若 GitHub 更新後畫面還是舊版，請在網站按 Command + Shift + R 強制重新整理，或清除 Safari 暫存。
 
 更新方式：
 1. 解壓縮 zip。
-2. 到 GitHub repository：panda-english-adventure。
-3. Add file → Upload files。
-4. 上傳 index.html、style.css、game.js、README.md。
-5. Commit changes。
+2. GitHub repository → Add file → Upload files。
+3. 上傳 index.html、style.css、game.js、README.md。
+4. Commit changes。

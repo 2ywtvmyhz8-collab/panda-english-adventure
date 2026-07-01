@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Fox Academy V2.0 Beta</title>
+<title>Fox Academy V2.0.1 Fixed</title>
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 <div id="fxLayer"></div>
+
 <header class="topbar">
 <button onclick="go('home')">🏫 大廳</button>
 <button onclick="go('daily')">🗓 打卡</button>
@@ -15,6 +16,7 @@
 <button onclick="go('world')">🌍 冒險</button>
 <button onclick="go('review')">🔁 真複習</button>
 <button onclick="go('collection')">🎴 收藏館</button>
+<button onclick="go('boss')">👾 Boss</button>
 <button onclick="go('backpack')">🎒 背包</button>
 <button onclick="go('homeFox')">🏡 小屋</button>
 <button onclick="go('parent')">👩 媽媽</button>
@@ -25,8 +27,8 @@
   <div class="hero">
     <div class="fox avatar">🦊</div>
     <h1>Fox Academy</h1>
-    <h3>V2.0 Beta｜真正遊戲循環版</h3>
-    <p>修正：收藏館有資料、Review Cave 必須實際答題才算複習。新增背包、收藏百科、可互動複習、狐狸小屋與更完整的獎勵循環。</p>
+    <h3>V2.0.1 Fixed｜修正版</h3>
+    <p>修正：Review Cave 一定會出題，不能只按「我已複習」；Boss Tower 恢復可玩；收藏館可正常顯示與開卡。</p>
     <div class="stats">
       <span>⭐ XP <b id="xpA">0</b></span>
       <span>💰 Coins <b id="coinA">0</b></span>
@@ -40,7 +42,7 @@
     <div class="hallTile" onclick="go('world')">🌍<b>自由冒險</b><small>收集卡片與金幣</small></div>
     <div class="hallTile" onclick="go('review')">🔁<b>真複習</b><small>錯題要重新答</small></div>
     <div class="hallTile" onclick="go('collection')">🎴<b>收藏館</b><small>百科圖鑑</small></div>
-    <div class="hallTile" onclick="go('backpack')">🎒<b>背包</b><small>徽章與道具</small></div>
+    <div class="hallTile" onclick="go('boss')">👾<b>Boss Tower</b><small>混合挑戰</small></div>
     <div class="hallTile" onclick="go('homeFox')">🏡<b>狐狸小屋</b><small>家具真的出現</small></div>
   </div>
 </section>
@@ -66,7 +68,7 @@
 
 <section id="review" class="screen"><div class="card">
 <h2>🔁 Review Cave 真複習洞穴</h2>
-<p class="note">不再只是按「我已複習」。必須完成題目，答對才算複習成功。</p>
+<p class="note">這裡不會再有「我已複習」按鈕。必須答對題目，才算複習成功。</p>
 <div id="reviewBox"></div>
 </div></section>
 
@@ -78,9 +80,16 @@
 <div class="grid" id="collectionBox"></div>
 </div></section>
 
+<section id="boss" class="screen"><div class="card">
+<h2>👾 Boss Tower</h2>
+<p class="note">Boss 是混合挑戰。答錯選項會鎖住，打贏有動畫與徽章。</p>
+<div class="hp">Boss HP：<span id="bossHp">❤️❤️❤️❤️❤️</span></div>
+<div id="bossBox"></div>
+<div id="bossWin" class="win hidden"></div>
+</div></section>
+
 <section id="backpack" class="screen"><div class="card">
 <h2>🎒 Adventure Backpack 冒險背包</h2>
-<p class="note">Boss徽章、寶箱獎勵、收藏卡都會在這裡顯示。</p>
 <div class="grid" id="backpackBox"></div>
 </div></section>
 
