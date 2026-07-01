@@ -1,14 +1,13 @@
-# Fox Academy V1.0 Alpha
+# Fox Academy V1.0.1 Collection & Animation
 
-本版重點：
-- 全面改為狐狸主題：Fox Academy。
-- 新增每日打卡與 streak。
-- 新增今日冒險與 Daily Chest。
-- 新增自由冒險：今日完成後仍可繼續玩。
-- 新增 Discovery Cards：70%教材、20%延伸、10%生活英文。
-- 新增狐狸日記。
-- 保留防亂猜、Hint、星星、錯題箱。
-- 選項與題目會洗牌。
+新增：
+- 收藏館 Fox Museum：顯示已收藏/未收藏卡片。
+- Boss 勝利 confetti 動畫。
+- Daily Chest 寶箱動畫。
+- 頁面切換淡入動畫。
+- 狐狸學園大廳。
+- 狐狸小屋 Fox Home，可用 coins 買家具。
+- 更新主題為更完整的遊戲版介面。
 
 更新方式：
 1. 解壓縮 zip。
