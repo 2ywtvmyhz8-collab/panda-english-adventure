@@ -1,13 +1,12 @@
-# Fox Academy V1.0.1 Collection & Animation
+# Fox Academy V2.0 Beta
 
-新增：
-- 收藏館 Fox Museum：顯示已收藏/未收藏卡片。
-- Boss 勝利 confetti 動畫。
-- Daily Chest 寶箱動畫。
-- 頁面切換淡入動畫。
-- 狐狸學園大廳。
-- 狐狸小屋 Fox Home，可用 coins 買家具。
-- 更新主題為更完整的遊戲版介面。
+修正重點：
+- Review Cave 不再只是「我已複習」按鈕，必須實際答題才算複習成功。
+- 收藏館有完整 Collection Database，未收藏顯示問號，已收藏可打開百科卡與發音。
+- 答對冒險題會收集卡片；答錯會進 Review Cave。
+- 新增冒險背包：顯示卡片與徽章。
+- 狐狸小屋家具會真的顯示在房間裡。
+- 保留選項洗牌、防亂猜、提示、星星、寶箱與動畫。
 
 更新方式：
 1. 解壓縮 zip。
@@ -15,4 +14,3 @@
 3. Add file → Upload files。
 4. 上傳 index.html、style.css、game.js、README.md。
 5. Commit changes。
-6. 等 1–2 分鐘刷新網站。

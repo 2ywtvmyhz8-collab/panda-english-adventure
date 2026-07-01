@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Fox Academy V1.0.1</title>
+<title>Fox Academy V2.0 Beta</title>
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -12,10 +12,10 @@
 <button onclick="go('home')">🏫 大廳</button>
 <button onclick="go('daily')">🗓 打卡</button>
 <button onclick="go('quest')">🔥 今日</button>
-<button onclick="go('world')">🌍 世界</button>
+<button onclick="go('world')">🌍 冒險</button>
+<button onclick="go('review')">🔁 真複習</button>
 <button onclick="go('collection')">🎴 收藏館</button>
-<button onclick="go('review')">🔁 複習</button>
-<button onclick="go('boss')">👾 Boss</button>
+<button onclick="go('backpack')">🎒 背包</button>
 <button onclick="go('homeFox')">🏡 小屋</button>
 <button onclick="go('parent')">👩 媽媽</button>
 </header>
@@ -25,23 +25,23 @@
   <div class="hero">
     <div class="fox avatar">🦊</div>
     <h1>Fox Academy</h1>
-    <h3>V1.0.1｜收藏與動畫版</h3>
-    <p>新增收藏館、Boss勝利動畫、寶箱動畫、狐狸學園大廳、畫面轉場、狐狸小屋。這版目標：更像遊戲。</p>
+    <h3>V2.0 Beta｜真正遊戲循環版</h3>
+    <p>修正：收藏館有資料、Review Cave 必須實際答題才算複習。新增背包、收藏百科、可互動複習、狐狸小屋與更完整的獎勵循環。</p>
     <div class="stats">
       <span>⭐ XP <b id="xpA">0</b></span>
       <span>💰 Coins <b id="coinA">0</b></span>
-      <span>🔥 Streak <b id="streakA">0</b></span>
+      <span>🎴 Cards <b id="cardA">0</b></span>
       <span>🎚 Level <b id="levelA">1</b></span>
     </div>
     <div class="bar"><i id="barA"></i></div>
   </div>
   <div class="hall">
-    <div class="hallTile" onclick="go('quest')">🔥<b>今日冒險</b><small>完成主線，開寶箱</small></div>
-    <div class="hallTile" onclick="go('world')">🌍<b>自由冒險</b><small>破關後繼續玩</small></div>
-    <div class="hallTile" onclick="go('collection')">🎴<b>收藏館</b><small>看已收集卡片</small></div>
-    <div class="hallTile" onclick="go('boss')">👾<b>Boss Tower</b><small>打怪拿獎勵</small></div>
-    <div class="hallTile" onclick="go('homeFox')">🏡<b>狐狸小屋</b><small>用金幣布置</small></div>
-    <div class="hallTile" onclick="go('parent')">👩<b>媽媽後台</b><small>看弱點與星星</small></div>
+    <div class="hallTile" onclick="go('quest')">🔥<b>今日冒險</b><small>主線任務＋寶箱</small></div>
+    <div class="hallTile" onclick="go('world')">🌍<b>自由冒險</b><small>收集卡片與金幣</small></div>
+    <div class="hallTile" onclick="go('review')">🔁<b>真複習</b><small>錯題要重新答</small></div>
+    <div class="hallTile" onclick="go('collection')">🎴<b>收藏館</b><small>百科圖鑑</small></div>
+    <div class="hallTile" onclick="go('backpack')">🎒<b>背包</b><small>徽章與道具</small></div>
+    <div class="hallTile" onclick="go('homeFox')">🏡<b>狐狸小屋</b><small>家具真的出現</small></div>
   </div>
 </section>
 
@@ -53,34 +53,39 @@
 </div></section>
 
 <section id="quest" class="screen"><div class="card">
-<h2>🔥 Today's Adventure</h2><p class="note">今日冒險完成後開寶箱；完成後可繼續自由冒險。</p>
-<div id="questList"></div><div id="chestBox" class="chest hidden"></div>
+<h2>🔥 Today's Adventure</h2>
+<p class="note">完成五項後開寶箱。破關後仍可去自由冒險繼續玩。</p>
+<div id="questList"></div>
+<div id="chestBox" class="chest hidden"></div>
 </div></section>
 
-<section id="world" class="screen"><div class="card">
-<h2>🌍 Free Adventure</h2><p class="note">題目與選項會洗牌。這裡可以一直玩，但已完成題目不重複加大量 XP。</p>
-<div class="grid" id="worldBox"></div></div>
+<section id="world" class="screen">
+<div class="card"><h2>🌍 Adventure Map</h2><p class="note">每個地圖都有題庫。答對會收集卡片，答錯進 Review Cave。</p><div class="grid" id="worldBox"></div></div>
 <div class="card hidden" id="playCard"><h2 id="playTitle"></h2><div id="playBox"></div></div>
 </section>
 
+<section id="review" class="screen"><div class="card">
+<h2>🔁 Review Cave 真複習洞穴</h2>
+<p class="note">不再只是按「我已複習」。必須完成題目，答對才算複習成功。</p>
+<div id="reviewBox"></div>
+</div></section>
+
 <section id="collection" class="screen"><div class="card">
-<h2>🎴 Fox Museum 收藏館</h2><p class="note">收藏會顯示在這裡。未收藏是灰色問號，讓妹妹有收集目標。</p>
+<h2>🎴 Fox Museum 收藏館</h2>
+<p class="note">已收藏卡片可以打開看百科與發音；未收藏會顯示問號。</p>
 <div id="collectionProgress" class="focus"></div>
 <div id="collectionTabs" class="tabs"></div>
 <div class="grid" id="collectionBox"></div>
 </div></section>
 
-<section id="review" class="screen"><div class="card">
-<h2>🔁 Review Cave</h2><p class="note">錯題會進這裡；複習後仍會保留紀錄，讓媽媽看到弱點。</p><div id="reviewBox"></div>
-</div></section>
-
-<section id="boss" class="screen"><div class="card boss">
-<h2>👾 Boss Tower</h2><p class="note">打贏會有 confetti、寶箱與徽章動畫。</p>
-<div class="hp">HP：<span id="hpBox"></span></div><div id="bossBox"></div><div id="bossWin" class="win hidden"></div>
+<section id="backpack" class="screen"><div class="card">
+<h2>🎒 Adventure Backpack 冒險背包</h2>
+<p class="note">Boss徽章、寶箱獎勵、收藏卡都會在這裡顯示。</p>
+<div class="grid" id="backpackBox"></div>
 </div></section>
 
 <section id="homeFox" class="screen"><div class="card">
-<h2>🏡 Fox Home 狐狸小屋</h2><p class="note">用 Coins 買家具。讓學習獎勵變成看得到的收集。</p>
+<h2>🏡 Fox Home 狐狸小屋</h2>
 <div class="room" id="roomBox"></div>
 <div class="grid" id="shopBox"></div>
 </div></section>
@@ -93,7 +98,7 @@
 <tr><td>Coins</td><td id="pCoins"></td></tr>
 <tr><td>Level</td><td id="pLevel"></td></tr>
 <tr><td>Streak</td><td id="pStreak"></td></tr>
-<tr><td>收藏</td><td id="pCards"></td></tr>
+<tr><td>收藏進度</td><td id="pCards"></td></tr>
 <tr><td>平均星星</td><td id="pStars"></td></tr>
 <tr><td>錯題觀察</td><td id="pWrong"></td></tr>
 <tr><td>建議</td><td id="pSuggest"></td></tr>
@@ -101,6 +106,8 @@
 <button class="danger" onclick="resetGame()">清除紀錄</button>
 </div></section>
 </main>
+
+<div id="modal" class="modal hidden"><div class="modalCard"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
 <div id="toast"></div>
 <script src="game.js"></script>
 </body></html>
