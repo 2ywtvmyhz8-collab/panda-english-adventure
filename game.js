@@ -1,38 +1,129 @@
 
-const STORE='pea_v03_antiguess';
-let S=JSON.parse(localStorage.getItem(STORE)||'{"xp":0,"coins":0,"correct":0,"done":{},"claimed":{},"wrong":{},"stars":{},"review":{},"reviewed":{}}');
-let hp=180, foodIndex=0, foodAttempts=0;
-const vocab=[['🥗','healthy','健康的','Healthy foods are good for you.'],['🍽️','portion','份量','A portion is the amount of food someone eats.'],['✅','choice','選擇','Eva makes unhealthy choices.'],['💪','wellness','身心健康','Wellness means eating well, exercising, and feeling good.'],['🧠','nutrition','營養','Good nutrition means healthy eating.'],['🌈','variety','多樣性','Eat a variety of foods.'],['🔄','change','改變','Small changes are easier than big changes.'],['📈','improve','改善','Small changes can improve your wellness.'],['🌾','whole grain','全穀','Whole grains are better than refined grains.'],['🥛','dairy','乳製品','Dairy has protein and calcium.'],['🏃','exercise','運動','Exercise is healthy for your body and mind.'],['🧹','chores','家事','Chores make you move.']];
-const foods=[['🍎 apple','Fruits','Fruit is sweet and grows on plants.'],['🍌 banana','Fruits','Bananas are fruits. They are sweet.'],['🍊 orange','Fruits','Oranges are fruits.'],['🥬 spinach','Vegetables','Spinach is a leafy vegetable.'],['🥕 carrot','Vegetables','Carrots are vegetables.'],['🌽 corn','Vegetables','Corn is counted as a vegetable here.'],['🍞 bread','Grains','Bread is made from grain.'],['🍚 rice','Grains','Rice is a grain.'],['🥣 cereal','Grains','Cereal is a grain product.'],['🥚 egg','Protein','Eggs are protein foods.'],['🐟 fish','Protein','Fish is protein.'],['🫘 beans','Protein','Beans are protein foods.'],['🥛 milk','Dairy','Milk is dairy.'],['🧀 cheese','Dairy','Cheese is dairy.'],['🍦 yogurt','Dairy','Yogurt is dairy.']];
-const reading=[['Welcome to my blog! This is my little sister. Her name is Eva.','Who is Eva?','little sister',['little sister','teacher','doctor'],'Eva is family.'],['She likes big portions of salty snacks.','What kind of snacks does Eva like?','salty snacks',['salty snacks','vegetables','milk'],'Look for the words salty snacks.'],['The definition of wellness is eating well, exercising, and feeling good.','Wellness means eating well, exercising, and feeling _____.','good',['good','sad','hungry'],'The sentence says feeling good.'],['Whole fruit is healthier than fruit juice.','Which is healthier?','whole fruit',['whole fruit','fruit juice','candy'],'The word healthier tells you the answer.'],['Vegetables keep your heart healthy and your body working.','What do vegetables keep healthy?','heart',['heart','bag','desk'],'Look for keep your ____ healthy.'],['Whole grains are better for you than refined grains.','Which grains are better?','whole grains',['whole grains','refined grains','no grains'],'Better means healthier.']];
-const phonics=[['green','ee','green has ee.'],['tree','ee','tree has ee.'],['cheese','ee','cheese has ee.'],['teacher','ea','teacher has ea.'],['leaf','ea','leaf has ea.'],['seat','ea','seat has ea.'],['theme','e_e','theme has e_e.'],['complete','e_e','complete has e_e.'],['baby','y','baby ends with y.'],['healthy','y','healthy ends with y.'],['key','ey','key has ey.'],['money','ey','money has ey.']];
-const grammar=[['Whole fruit is ______ than fruit juice.',['healthier','healthy','healthiest'],'healthier','Compare two things: use -er.'],['The chocolate chip muffin is ______ than the blueberry muffin.',['bigger','big','more big'],'bigger','big doubles g: bigger.'],['Small changes are ______ than big changes.',['easier','easy','more easy'],'easier','easy changes y to ier.'],['I ______ going to eat healthy portions.',['am','is','are'],'am','I goes with am.'],['She ______ going to play outside.',['am','is','are'],'is','She goes with is.'],['They ______ going to do more chores.',['am','is','are'],'are','They goes with are.'],['good 的比較級是？',['better','gooder','best'],'better','good is irregular: better.'],['bad 的比較級是？',['worse','badder','worst'],'worse','bad is irregular: worse.']];
-const animals=[['🦁 a group of lions',['pride','pack','school'],'pride','Lions live in a pride.'],['🐺 a group of wolves',['pack','flock','bed'],'pack','Wolves are a pack.'],['🐟 a group of fish',['school','pod','army'],'school','Fish swim in a school.'],['🐬 a group of dolphins',['pod','herd','tower'],'pod','Dolphins are a pod.'],['🦒 a group of giraffes',['tower','cloud','nest'],'tower','Giraffes are tall like a tower.'],['🐝 a group of bees',['swarm','clowder','parade'],'swarm','Bees fly in a swarm.'],['🐸 a group of frogs',['army','dazzle','class'],'army','Frogs can be an army.'],['🦓 a group of zebras',['dazzle','mischief','pod'],'dazzle','Zebra stripes dazzle.'],['animals with backbones',['vertebrates','invertebrates','mollusks'],'vertebrates','Backbone means vertebrate.'],['animals without backbones',['invertebrates','mammals','birds'],'invertebrates','No backbone means invertebrate.']];
-const bossQ=[['Which food group is milk?',['Dairy','Protein','Grains'],'Dairy','Milk is dairy.'],['Which is healthier?',['whole fruit','fruit juice','fries'],'whole fruit','Whole fruit is healthier.'],['Which word has long e?',['green','bread','hot'],'green','green has ee.'],['I ___ going to exercise.',['am','is','are'],'am','I am.'],['A group of lions is a ____.',['pride','pack','school'],'pride','Lions = pride.'],['Whole grains are ____ than refined grains.',['better','worse','bad'],'better','Whole grains are better.']];
+const STORE='fox_academy_v1_alpha';
+let S=JSON.parse(localStorage.getItem(STORE)||'{"xp":0,"coins":0,"correct":0,"claimed":{},"wrong":{},"stars":{},"review":{},"reviewed":{},"login":{},"done":{},"cards":{}}');
+let hp=210;
+const today=new Date().toDateString();
+
+const school=[
+ ['🍎 apple','Fruits','Apple is a fruit.'],['🍌 banana','Fruits','Bananas are yellow fruits.'],['🥛 milk','Dairy','Milk is dairy.'],['🧀 cheese','Dairy','Cheese is dairy.'],['🍚 rice','Grains','Rice is a grain.'],['🍞 bread','Grains','Bread is made from grain.'],['🥚 egg','Protein','Egg is protein.'],['🐟 fish','Protein','Fish is protein.'],['🥕 carrot','Vegetables','Carrot is a vegetable.'],['🥬 spinach','Vegetables','Spinach is leafy vegetable.']
+];
+const extended=[
+ ['🥝 kiwi','Fruits','Kiwi is green inside.'],['🍇 grape','Fruits','Grapes grow in bunches.'],['🍑 peach','Fruits','Peach is a sweet fruit.'],['🍐 pear','Fruits','Pear is a fruit.'],['🫘 beans','Protein','Beans are protein food.'],['🥣 cereal','Grains','Cereal is a grain product.']
+];
+const life=[
+ ['🛒 supermarket','Place','We buy fruit at the supermarket.'],['🌱 seed','Nature','Apples have seeds.'],['☀️ warm','Adjective','Bananas grow in warm places.'],['💪 calcium','Nutrition','Milk has calcium.']
+];
+const reading=[
+ ['Welcome to my blog! This is my little sister. Her name is Eva.','Who is Eva?','little sister',['little sister','teacher','doctor'],'Eva is family.'],
+ ['She likes big portions of salty snacks.','What kind of snacks does Eva like?','salty snacks',['salty snacks','vegetables','milk'],'Look for salty snacks.'],
+ ['Whole fruit is healthier than fruit juice.','Which is healthier?','whole fruit',['whole fruit','fruit juice','candy'],'The sentence says whole fruit is healthier.'],
+ ['Whole grains are better for you than refined grains.','Which grains are better?','whole grains',['whole grains','refined grains','no grains'],'Better means healthier.']
+];
+const grammar=[
+ ['Whole fruit is ______ than fruit juice.',['healthier','healthy','healthiest'],'healthier','Use -er to compare two things.'],
+ ['I ______ going to eat fruit.',['am','is','are'],'am','I am.'],
+ ['She ______ going to exercise.',['am','is','are'],'is','She is.'],
+ ['They ______ going to drink water.',['am','is','are'],'are','They are.'],
+ ['good 的比較級是？',['better','gooder','best'],'better','good is irregular: better.'],
+ ['bad 的比較級是？',['worse','badder','worst'],'worse','bad is irregular: worse.']
+];
+const animals=[
+ ['🦁 a group of lions',['pride','pack','school'],'pride','Lions live in a pride.'],['🐺 a group of wolves',['pack','flock','bed'],'pack','Wolves are a pack.'],['🐟 a group of fish',['school','pod','army'],'school','Fish swim in a school.'],['🐬 a group of dolphins',['pod','herd','tower'],'pod','Dolphins are a pod.'],['🦒 a group of giraffes',['tower','cloud','nest'],'tower','Giraffes are tall like a tower.'],['🐝 a group of bees',['swarm','clowder','parade'],'swarm','Bees fly in a swarm.'],['animals with backbones',['vertebrates','invertebrates','mollusks'],'vertebrates','Backbone means vertebrate.'],['animals without backbones',['invertebrates','mammals','birds'],'invertebrates','No backbone means invertebrate.']
+];
+const diary=[
+ 'Today I ate an apple and drank milk. I made a healthy choice!',
+ 'I saw a pride of lions at the zoo.',
+ 'I am going to exercise after school.',
+ 'Whole fruit is healthier than fruit juice.',
+ 'My fox bought grapes at the supermarket.',
+ 'Milk has calcium. It helps my body grow.'
+];
+
 function save(){localStorage.setItem(STORE,JSON.stringify(S))}
-function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);if(id==='review')renderReview();update()}
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0); if(id==='review')renderReview(); update();}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1500)}
 function speak(text){const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=.86;speechSynthesis.speak(u)}
-function starsFromAttempts(attempts){return Math.max(1,4-attempts)}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function starsFromAttempts(n){return Math.max(1,4-n)}
 function starText(n){return '⭐'.repeat(n)+'☆'.repeat(3-n)}
 function markWrong(key,label){S.wrong[key]=(S.wrong[key]||0)+1;S.review[key]=label;save();update()}
-function award(key,xp,coins=0,attempts=1,label=''){if(S.claimed[key]){toast('已完成過 ✅');return false}let stars=starsFromAttempts(attempts);S.claimed[key]=1;S.stars[key]=stars;S.xp+=xp*stars;S.coins+=coins+stars;S.correct++;if(label && S.review[key])S.reviewed[key]=1;save();update();toast(starText(stars)+' +'+(xp*stars)+' XP');return true}
-function renderToday(){const tasks=[['🎴 單字複習','學 6 張 Unit 3 核心單字','vocab'],['🍽 食物分類','完成 Food Group 一輪','food'],['📖 閱讀理解','完成 Healthy Choices','reading'],['🦁 老師補充','複習 animals collective nouns','animals'],['🔁 錯題箱','複習錯過的題目','review'],['👾 Boss','挑戰 Junk Food Monster','boss']];document.getElementById('todayList').innerHTML=tasks.map(t=>`<div class="mission"><h3>${t[0]}</h3><p>${t[1]}</p><button onclick="go('${t[2]}')">去完成 ▶</button></div>`).join('')}
-function renderVocab(){document.getElementById('vocabBox').innerHTML=vocab.map((v,i)=>`<div class="wordcard"><div class="emoji">${v[0]}</div><div class="en">${v[1]}</div><p class="zh">${v[2]}<br>${v[3]}</p><button onclick="speak('${v[1]}')">🔊 單字</button> <button onclick="speak('${v[3]}')">🔊 句子</button> <button onclick="award('vocab_${i}',4,0,1,'${v[1]}')">學會</button></div>`).join('')}
-function renderFood(){showFoodItem();document.getElementById('healthyBox').innerHTML=makeQuiz([['salad',['healthy','unhealthy'],'healthy','Salad is healthy.'],['fries',['healthy','unhealthy'],'unhealthy','Fries are unhealthy.'],['whole grains',['healthy','unhealthy'],'healthy','Whole grains are healthy.'],['candy',['healthy','unhealthy'],'unhealthy','Candy is unhealthy.']], 'healthy', 5)}
-function showFoodItem(){foodAttempts=1;const doneBox=document.getElementById('foodDone');document.getElementById('foodHint').classList.add('hidden');if(doneBox)doneBox.classList.add('hidden');if(foodIndex>=foods.length){document.getElementById('foodItem').innerHTML='🎉 Food Group Clear!';document.getElementById('foodChoices').innerHTML='<button onclick="restartFood(false)">再玩一次：不重複加分</button> <button class="secondary" onclick="restartFood(true)">練習模式：重排</button> <button onclick="go(\'reading\')">下一關：Reading ▶</button>';if(doneBox){doneBox.classList.remove('hidden');doneBox.innerHTML='已完成本關。錯過的題目已放入 Review Box。'}S.done.food=1;save();update();return}const f=foods[foodIndex];document.getElementById('foodItem').innerHTML=f[0]+`<div class="stars">${starText(starsFromAttempts(foodAttempts))}</div>`;document.getElementById('foodChoices').innerHTML=['Fruits','Vegetables','Grains','Protein','Dairy'].map(g=>`<button class="choice" onclick="answerFood(this,'${g}','${f[1]}','${f[2]}')">${g}</button>`).join('')}
-function restartFood(practice){foodIndex=0;if(practice)foods.sort(()=>Math.random()-0.5);showFoodItem()}
-function answerFood(btn,guess,ans,hint){const current=foods[foodIndex];const key='food_'+current[0].replace(/\s+/g,'_');if(btn.disabled)return;if(guess===ans){btn.classList.add('correct');award(key,5,0,foodAttempts,current[0]);foodIndex++;setTimeout(showFoodItem,650)}else{btn.classList.add('wrong','locked');btn.disabled=true;markWrong(key,current[0]);foodAttempts++;document.getElementById('foodItem').innerHTML=current[0]+`<div class="stars">${starText(starsFromAttempts(foodAttempts))}</div>`;if(foodAttempts>=3){const h=document.getElementById('foodHint');h.classList.remove('hidden');h.textContent='💡 Hint: '+hint}toast('這個選項先鎖住，再想一下')}}
-function makeQuiz(items,prefix,xp){return items.map((q,i)=>`<div class="quest"><h3>${q[0]}</h3><div class="hint hidden" id="${prefix}_hint_${i}">💡 Hint: ${q[3]}</div>${q[1].map(a=>`<button class="choice" onclick="answerChoice(this,'${a}','${q[2]}','${prefix}_${i}','${q[0]}','${prefix}_hint_${i}',${xp})">${a}</button>`).join('')}</div>`).join('')}
-function answerChoice(btn,a,ans,key,label,hintId,xp){let n=Number(btn.parentElement.dataset.attempts||1);if(a===ans){btn.classList.add('correct');award(key,xp,0,n,label);btn.parentElement.querySelectorAll('button').forEach(b=>b.disabled=true)}else{btn.classList.add('wrong','locked');btn.disabled=true;markWrong(key,label);n++;btn.parentElement.dataset.attempts=n;if(n>=3)document.getElementById(hintId).classList.remove('hidden');toast('錯的選項已鎖住')}}
-function renderReading(){document.getElementById('readingBox').innerHTML=reading.map((r,i)=>`<div class="quest"><div class="story">${r[0]}</div><button onclick="speak('${r[0]}')">🔊 聽句子</button><h3>${r[1]}</h3><div class="hint hidden" id="read_hint_${i}">💡 Hint: ${r[4]}</div>${r[3].map(a=>`<button class="choice" onclick="answerChoice(this,'${a}','${r[2]}','read_${i}','${r[1]}','read_hint_${i}',6)">${a}</button>`).join('')}</div>`).join('')}
-function renderPhonics(){document.getElementById('phonicsBox').innerHTML=phonics.map((p,i)=>`<div class="quest"><h3>${p[0]}</h3><div class="hint hidden" id="ph_hint_${i}">💡 Hint: ${p[2]}</div>${['ee','ea','e_e','y','ey'].map(a=>`<button class="choice" onclick="answerChoice(this,'${a}','${p[1]}','ph_${i}','${p[0]}','ph_hint_${i}',5)">${a}</button>`).join('')}</div>`).join('')}
-function renderGrammar(){document.getElementById('grammarBox').innerHTML=grammar.map((g,i)=>`<div class="quest"><h3>${g[0]}</h3><div class="hint hidden" id="gr_hint_${i}">💡 Hint: ${g[3]}</div>${g[1].map(a=>`<button class="choice" onclick="answerChoice(this,'${a}','${g[2]}','gr_${i}','${g[0]}','gr_hint_${i}',6)">${a}</button>`).join('')}</div>`).join('')}
-function renderAnimals(){document.getElementById('animalBox').innerHTML=animals.map((a,i)=>`<div class="quest"><h3>${a[0]}</h3><div class="hint hidden" id="an_hint_${i}">💡 Hint: ${a[3]}</div>${a[1].map(x=>`<button class="choice" onclick="answerChoice(this,'${x}','${a[2]}','an_${i}','${a[0]}','an_hint_${i}',6)">${x}</button>`).join('')}</div>`).join('')}
-function renderReview(){const keys=Object.keys(S.review);document.getElementById('reviewBox').innerHTML=keys.length?keys.map(k=>`<div class="quest"><h3>${S.review[k]}</h3><p>錯過 ${S.wrong[k]||0} 次｜${S.reviewed[k]?'已複習 ✅':'待複習'}</p><button onclick="S.reviewed['${k}']=1;save();renderReview();update();toast('已標記複習')">我已複習</button></div>`).join(''):'<div class="win">目前沒有錯題。很棒！</div>'}
-function renderBoss(){hp=180;document.getElementById('winBox').classList.add('hidden');drawHp();document.getElementById('bossBox').innerHTML=bossQ.map((b,i)=>`<div class="quest"><h3>${b[0]}</h3><div class="hint hidden" id="boss_hint_${i}">💡 Hint: ${b[3]}</div>${b[1].map(a=>`<button class="choice" onclick="bossPick(this,'${a}','${b[2]}','boss_${i}','${b[0]}','boss_hint_${i}')">${a}</button>`).join('')}</div>`).join('')}
-function bossPick(btn,a,ans,key,label,hintId){let n=Number(btn.parentElement.dataset.attempts||1);if(a===ans){btn.classList.add('correct');btn.parentElement.querySelectorAll('button').forEach(b=>b.disabled=true);if(!S.claimed[key]){let st=starsFromAttempts(n);S.claimed[key]=1;S.stars[key]=st;S.xp+=8*st;S.coins+=st;S.correct++;hp=Math.max(0,hp-30);save();update();drawHp();toast(starText(st)+' Boss hit!')}if(hp===0&&!S.done.boss){S.done.boss=1;S.coins+=120;save();update();document.getElementById('winBox').classList.remove('hidden')}}else{btn.classList.add('wrong','locked');btn.disabled=true;markWrong(key,label);n++;btn.parentElement.dataset.attempts=n;if(n>=3)document.getElementById(hintId).classList.remove('hidden');toast('Boss 擋下亂猜！')}}
-function drawHp(){document.getElementById('hpBox').textContent='❤️'.repeat(Math.ceil(hp/30))+' '+hp}
-function update(){const level=Math.floor(S.xp/300)+1;['xpA','pXp'].forEach(id=>document.getElementById(id).textContent=S.xp);['coinA','pCoin'].forEach(id=>document.getElementById(id).textContent=S.coins);['correctA','pCorrect'].forEach(id=>document.getElementById(id).textContent=S.correct);document.getElementById('levelA').textContent=level;document.getElementById('barA').style.width=Math.min(100,(S.xp%300)/3)+'%';document.getElementById('pDone').textContent=Object.keys(S.claimed).length+' 項';const w=Object.entries(S.wrong).sort((a,b)=>b[1]-a[1]).slice(0,8).map(x=>`${S.review[x[0]]||x[0]}：${x[1]}次`).join('、');document.getElementById('pWrong').textContent=w||'目前沒有明顯錯題';const vals=Object.values(S.stars);document.getElementById('pStars').textContent=vals.length?`平均 ${(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1)} 星｜共 ${vals.length} 題`:'尚無星星紀錄'}
-function resetGame(){if(confirm('確定清除紀錄？')){localStorage.removeItem(STORE);location.reload()}}
-renderToday();renderVocab();renderFood();renderReading();renderPhonics();renderGrammar();renderAnimals();renderBoss();update();
+function award(key,xp,attempts=1,label=''){if(S.claimed[key]){toast('已完成過 ✅');return false}let st=starsFromAttempts(attempts);S.claimed[key]=1;S.stars[key]=st;S.xp+=xp*st;S.coins+=st+Math.floor(xp/3);S.correct++;if(label)S.cards[label]=1;save();update();toast(starText(st)+' +'+(xp*st)+' XP');return true}
+function answer(btn,a,ans,key,label,hintId,xp){let n=Number(btn.parentElement.dataset.attempts||1);if(btn.disabled)return;if(a===ans){btn.classList.add('correct');award(key,xp,n,label);btn.parentElement.querySelectorAll('button').forEach(b=>b.disabled=true)}else{btn.classList.add('wrong','locked');btn.disabled=true;markWrong(key,label);n++;btn.parentElement.dataset.attempts=n;if(n>=3&&hintId)document.getElementById(hintId).classList.remove('hidden');toast('錯的選項已鎖住')}}
+function makeQuiz(items,prefix,xp){return shuffle(items).map((q,i)=>`<div class="quest"><h3>${q[0]}</h3><div class="hint hidden" id="${prefix}_hint_${i}">💡 Hint: ${q[3]}</div>${shuffle(q[1]).map(a=>`<button class="choice" onclick="answer(this,'${a}','${q[2]}','${prefix}_${i}_${q[0].replace(/\W/g,'')}','${q[0]}','${prefix}_hint_${i}',${xp})">${a}</button>`).join('')}</div>`).join('')}
+
+function claimLogin(){
+ if(S.login.last===today){toast('今天已打卡 ✅');return}
+ let yesterday=new Date(Date.now()-86400000).toDateString();
+ S.login.streak=(S.login.last===yesterday)?(S.login.streak||0)+1:1;
+ S.login.last=today;
+ let reward=20+S.login.streak*5;
+ S.coins+=reward;S.xp+=10;
+ save();update();renderDaily();toast(`Day ${S.login.streak} +${reward} coins`);
+}
+function renderDaily(){
+ const st=S.login.streak||0;
+ document.getElementById('dailyStatus').innerHTML=`目前連續登入：🔥 ${st} 天<br>${S.login.last===today?'今天已打卡 ✅':'今天尚未打卡'}`;
+ document.getElementById('streakRewards').innerHTML=[1,2,3,7,14,30].map(d=>`<div class="mini">${st>=d?'✅':'🎁'}<b>Day ${d}</b><small>${d===7?'Rare Fox Hat':d===30?'Legend Fox':'Coins Bonus'}</small></div>`).join('');
+}
+function renderQuest(){
+ const tasks=[['Vocabulary','完成 5 題核心單字','playWorld("Supermarket")'],['Reading','完成 4 題閱讀理解','playReading()'],['Grammar','完成 4 題文法','playGrammar()'],['Animal Note','老師 7/1 補充','playAnimals()'],['Boss','打敗 Boss','go("boss")']];
+ document.getElementById('questList').innerHTML=tasks.map((t,i)=>`<div class="mission"><h3>${i+1}. ${t[0]}</h3><p>${t[1]}</p><button onclick='${t[2]}'>開始 ▶</button><button onclick="completeQuest(${i})">標記完成</button></div>`).join('');
+}
+function completeQuest(i){S.done['quest_'+today+'_'+i]=1;save();update();toast('任務完成 ✅');let count=[0,1,2,3,4].filter(x=>S.done['quest_'+today+'_'+x]).length;if(count>=5 && !S.done['chest_'+today]){S.done['chest_'+today]=1;S.coins+=80;S.xp+=50;document.getElementById('chestBox').classList.remove('hidden');document.getElementById('chestBox').innerHTML='🎁 Daily Chest Open! +80 Coins +50 XP';save();update();}}
+function renderWorld(){
+ const worlds=[['🛒','Supermarket','Food + 延伸水果','Supermarket'],['🌳','Forest','Discovery Cards','Forest'],['🦁','Zoo','Animal groups','Zoo'],['🏫','School','Grammar practice','School'],['👾','Boss Rush','混合挑戰','Boss']];
+ document.getElementById('worldBox').innerHTML=worlds.map(w=>`<div class="world"><div class="cardEmoji">${w[0]}</div><h3>${w[1]}</h3><p>${w[2]}</p><button onclick="playWorld('${w[3]}')">進入</button></div>`).join('');
+}
+function playWorld(type){
+ document.getElementById('playCard').classList.remove('hidden');
+ document.getElementById('playTitle').textContent=type;
+ let data=[];
+ if(type==='Supermarket') data=[...school.map(x=>[x[0],['Fruits','Vegetables','Grains','Protein','Dairy'],x[1],x[2]]) , ...extended.slice(0,4).map(x=>[x[0],['Fruits','Vegetables','Grains','Protein','Dairy'],x[1],x[2]])];
+ else if(type==='Forest') data=life.map(x=>[x[0],['Place','Nature','Adjective','Nutrition'],x[1],x[2]]);
+ else if(type==='Zoo') {playAnimals(); return;}
+ else if(type==='School') {playGrammar(); return;}
+ else {go('boss'); return;}
+ document.getElementById('playBox').innerHTML=makeQuiz(data,'world_'+type,6);
+ go('world');
+}
+function playReading(){document.getElementById('playCard').classList.remove('hidden');document.getElementById('playTitle').textContent='Reading Adventure';document.getElementById('playBox').innerHTML=makeQuiz(reading,'reading',7);go('world')}
+function playGrammar(){document.getElementById('playCard').classList.remove('hidden');document.getElementById('playTitle').textContent='Grammar School';document.getElementById('playBox').innerHTML=makeQuiz(grammar,'grammar',6);go('world')}
+function playAnimals(){document.getElementById('playCard').classList.remove('hidden');document.getElementById('playTitle').textContent='Animal Zoo';document.getElementById('playBox').innerHTML=makeQuiz(animals,'animal',6);go('world')}
+function renderCards(){
+ const all=[...school,...extended,...life];
+ document.getElementById('cardBox').innerHTML=all.map((c,i)=>`<div class="wordcard"><div class="cardEmoji">${c[0].split(' ')[0]}</div><div class="en">${c[0]}</div><p class="zh">${c[2]}</p><button onclick="speak('${c[2]}')">🔊</button><button onclick="S.cards['${c[0]}']=1;save();update();toast('已收藏')">收藏</button></div>`).join('');
+}
+function renderReview(){
+ const keys=Object.keys(S.review);
+ document.getElementById('reviewBox').innerHTML=keys.length?keys.map(k=>`<div class="quest"><h3>${S.review[k]}</h3><p>錯過 ${S.wrong[k]||0} 次｜${S.reviewed[k]?'已複習 ✅':'待複習'}</p><button onclick="S.reviewed['${k}']=1;S.xp+=5;save();renderReview();update();toast('+5 XP 複習完成')">我已複習</button></div>`).join(''):'<div class="win">目前沒有錯題。很棒！</div>';
+}
+function renderBoss(){
+ hp=210;document.getElementById('bossWin').classList.add('hidden');drawHp();
+ const pool=[
+  ['Which food group is milk?',['Dairy','Protein','Grains'],'Dairy','Milk is dairy.'],
+  ['Which is healthier?',['whole fruit','fruit juice','fries'],'whole fruit','Whole fruit is healthier.'],
+  ['I ___ going to exercise.',['am','is','are'],'am','I am.'],
+  ['A group of lions is a ____.',['pride','pack','school'],'pride','Lions = pride.'],
+  ['Which is an extended fruit?',['kiwi','rice','milk'],'kiwi','Kiwi is a fruit.'],
+  ['Milk has ____.',['calcium','sand','paper'],'calcium','Milk has calcium.'],
+  ['A group of fish is a ____.',['school','tower','pride'],'school','Fish swim in a school.']
+ ];
+ document.getElementById('bossBox').innerHTML=makeQuiz(pool,'boss',8)+`<button class="big" onclick="bossClear()">我完成 Boss</button>`;
+}
+function bossClear(){if(S.done['boss_'+today]){toast('今天 Boss 已領過')}else{S.done['boss_'+today]=1;S.coins+=120;S.xp+=60;document.getElementById('bossWin').classList.remove('hidden');save();update();toast('Boss Clear!')}}
+function drawHp(){document.getElementById('hpBox').textContent='❤️❤️❤️❤️❤️❤️❤️ '+hp}
+function newDiary(){document.getElementById('diaryBox').textContent=diary[Math.floor(Math.random()*diary.length)]}
+function update(){
+ const level=Math.floor(S.xp/300)+1;
+ ['xpA','pXp'].forEach(id=>document.getElementById(id).textContent=S.xp);
+ ['coinA','pCoins'].forEach(id=>document.getElementById(id).textContent=S.coins);
+ document.getElementById('levelA').textContent=level;document.getElementById('pLevel').textContent=level;
+ document.getElementById('streakA').textContent=S.login.streak||0;document.getElementById('pStreak').textContent=S.login.streak||0;
+ document.getElementById('barA').style.width=Math.min(100,(S.xp%300)/3)+'%';
+ document.getElementById('pDone').textContent=Object.keys(S.done).length+' 項｜收藏 '+Object.keys(S.cards).length+' 張';
+ const vals=Object.values(S.stars);document.getElementById('pStars').textContent=vals.length?`平均 ${(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1)} 星｜共 ${vals.length} 題`:'尚無星星紀錄';
+ const w=Object.entries(S.wrong).sort((a,b)=>b[1]-a[1]).slice(0,8).map(x=>`${S.review[x[0]]||x[0]}：${x[1]}次`).join('、');document.getElementById('pWrong').textContent=w||'目前沒有明顯錯題';
+ document.getElementById('pSuggest').textContent=w?'建議先玩「複習」與「自由冒險」中的弱點類別。':'可以挑戰自由冒險或 Boss Rush。';
+}
+function resetGame(){if(confirm('確定清除所有紀錄？')){localStorage.removeItem(STORE);location.reload()}}
+renderDaily();renderQuest();renderWorld();renderCards();renderBoss();newDiary();update();

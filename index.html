@@ -3,91 +3,138 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Panda English Adventure V0.3</title>
+<title>Fox Academy V1.0 Alpha</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <header class="topbar">
-  <button onclick="go('home')">🏠 首頁</button>
-  <button onclick="go('today')">🔥 今日</button>
-  <button onclick="go('vocab')">🎴 單字</button>
-  <button onclick="go('food')">🍽 食物</button>
-  <button onclick="go('reading')">📖 閱讀</button>
-  <button onclick="go('phonics')">🔤 拼音</button>
-  <button onclick="go('grammar')">✏️ 文法</button>
-  <button onclick="go('animals')">🦁 動物</button>
-  <button onclick="go('review')">🔁 錯題箱</button>
+  <button onclick="go('home')">🦊 首頁</button>
+  <button onclick="go('daily')">🗓 打卡</button>
+  <button onclick="go('quest')">🔥 今日冒險</button>
+  <button onclick="go('world')">🌍 自由冒險</button>
+  <button onclick="go('review')">🔁 複習</button>
+  <button onclick="go('cards')">🎴 圖鑑</button>
   <button onclick="go('boss')">👾 Boss</button>
+  <button onclick="go('diary')">📖 狐狸日記</button>
   <button onclick="go('parent')">👩 媽媽</button>
 </header>
 
 <main>
 <section id="home" class="screen active">
   <div class="hero">
-    <div class="panda">🐼</div>
-    <h1>Panda English Adventure</h1>
-    <h3>V0.3｜Anti-Guess Learning Edition</h3>
-    <p>這版重點：不能靠亂按過關。答錯會鎖住選項、給提示、降低星星，錯題會進入 Review Box 再練一次。</p>
+    <div class="fox">🦊</div>
+    <h1>Fox Academy</h1>
+    <h3>V1.0 Alpha｜狐狸學園</h3>
+    <p>第一個正式狐狸版本：每日打卡、今日冒險、自由冒險、錯題複習、Discovery Cards、Boss、狐狸日記與媽媽後台。</p>
     <div class="stats">
       <span>⭐ XP <b id="xpA">0</b></span>
       <span>💰 Coins <b id="coinA">0</b></span>
-      <span>✅ Correct <b id="correctA">0</b></span>
+      <span>🔥 Streak <b id="streakA">0</b></span>
       <span>🎚 Level <b id="levelA">1</b></span>
     </div>
     <div class="bar"><i id="barA"></i></div>
-    <button class="big" onclick="go('today')">開始今日冒險 ▶</button>
+    <button class="big" onclick="go('daily')">進入狐狸學園 ▶</button>
   </div>
+
   <div class="card">
-    <h2>V0.3 新規則</h2>
+    <h2>今天可以做什麼？</h2>
     <div class="grid">
-      <div class="mini">🚫<b>防亂猜</b><small>答錯的選項會鎖住，不能一直亂點。</small></div>
-      <div class="mini">💡<b>提示系統</b><small>第二次錯才給提示，不直接公布答案。</small></div>
-      <div class="mini">⭐<b>三星評分</b><small>第一次答對 3 星；錯越多星越少。</small></div>
-      <div class="mini">🔁<b>錯題箱</b><small>錯過的題目會再出現，直到複習。</small></div>
+      <div class="mini">🗓<b>每日打卡</b><small>每天登入領獎，累積 streak。</small></div>
+      <div class="mini">🔥<b>今日冒險</b><small>完成主線，開每日寶箱。</small></div>
+      <div class="mini">🌍<b>自由冒險</b><small>破關後還能繼續玩，不會沒事做。</small></div>
+      <div class="mini">🔁<b>錯題複習</b><small>錯過的題目會回來洗腦。</small></div>
+      <div class="mini">🎴<b>Discovery Cards</b><small>課本70%、延伸20%、生活10%。</small></div>
+      <div class="mini">📖<b>狐狸日記</b><small>每天一小段自然英文。</small></div>
     </div>
   </div>
 </section>
 
-<section id="today" class="screen">
-  <div class="card"><h2>🔥 Today's Adventure</h2><p class="note">今天流程：新課 → 複習 → 老師補充 → Boss。</p><div id="todayList"></div></div>
-</section>
-
-<section id="vocab" class="screen"><div class="card"><h2>🎴 Unit 3 單字卡</h2><div id="vocabBox" class="grid cards"></div></div></section>
-
-<section id="food" class="screen">
+<section id="daily" class="screen">
   <div class="card">
-    <h2>🍽 Food Group 點選配對</h2>
-    <p class="note">先看食物，再點分類。答錯會鎖住該選項；第二次錯才給提示。</p>
-    <div id="foodItem" class="focus"></div>
-    <div id="foodHint" class="hint hidden"></div>
-    <div id="foodChoices" class="choices"></div>
-    <div id="foodDone" class="win hidden"></div>
+    <h2>🗓 Daily Check-in 每日打卡</h2>
+    <div id="dailyStatus" class="focus"></div>
+    <button class="big" onclick="claimLogin()">今日打卡領獎</button>
+    <div class="grid" id="streakRewards"></div>
   </div>
-  <div class="card"><h2>🥗 Healthy or Unhealthy</h2><div id="healthyBox"></div></div>
 </section>
 
-<section id="reading" class="screen"><div class="card"><h2>📖 Reading：Healthy Choices</h2><div id="readingBox"></div></div></section>
-<section id="phonics" class="screen"><div class="card"><h2>🔤 Long e Lab</h2><div id="phonicsBox"></div></div></section>
-<section id="grammar" class="screen"><div class="card"><h2>✏️ Grammar</h2><div id="grammarBox"></div></div></section>
-<section id="animals" class="screen"><div class="card"><h2>🦁 Animal Kingdom</h2><div id="animalBox"></div></div></section>
-<section id="review" class="screen"><div class="card"><h2>🔁 Review Box 錯題箱</h2><p class="note">答錯過的題目會出現在這裡。完成複習不會立刻刪除紀錄，但會標記已複習。</p><div id="reviewBox"></div></div></section>
-<section id="boss" class="screen"><div class="card boss"><h2>👾 Junk Food Monster</h2><p class="note">Boss 也套用防亂猜規則。</p><div class="hp">HP：<span id="hpBox"></span></div><div id="bossBox"></div><div id="winBox" class="win hidden">🏆 Victory! 得到 Health Hero Badge +120 coins</div></div></section>
+<section id="quest" class="screen">
+  <div class="card">
+    <h2>🔥 Today's Adventure 今日冒險</h2>
+    <p class="note">今日冒險一天完成一次。完成後會開 Daily Chest，接著可以去自由冒險。</p>
+    <div id="questList"></div>
+    <div id="chestBox" class="win hidden"></div>
+  </div>
+</section>
+
+<section id="world" class="screen">
+  <div class="card">
+    <h2>🌍 Free Adventure 自由冒險</h2>
+    <p class="note">今日冒險完成後仍可繼續玩。自由冒險會洗牌，不能背順序。</p>
+    <div class="grid" id="worldBox"></div>
+  </div>
+  <div class="card hidden" id="playCard">
+    <h2 id="playTitle"></h2>
+    <div id="playBox"></div>
+  </div>
+</section>
+
+<section id="review" class="screen">
+  <div class="card">
+    <h2>🔁 Review Cave 複習洞穴</h2>
+    <p class="note">答錯過的題目會出現在這裡。這是「洗腦自然學會」的核心。</p>
+    <div id="reviewBox"></div>
+  </div>
+</section>
+
+<section id="cards" class="screen">
+  <div class="card">
+    <h2>🎴 Discovery Cards 圖鑑</h2>
+    <p class="note">不是全部都考。部分是延伸知識，讓英文自然長大。</p>
+    <div class="grid" id="cardBox"></div>
+  </div>
+</section>
+
+<section id="boss" class="screen">
+  <div class="card boss">
+    <h2>👾 Boss Rush</h2>
+    <p class="note">Boss 每次題目洗牌。答錯選項會鎖住，不可靠亂按過關。</p>
+    <div class="hp">HP：<span id="hpBox"></span></div>
+    <div id="bossBox"></div>
+    <div id="bossWin" class="win hidden">🏆 Victory! +120 Coins｜解鎖 Fox Hero Badge</div>
+  </div>
+</section>
+
+<section id="diary" class="screen">
+  <div class="card">
+    <h2>📖 Fox Diary 狐狸日記</h2>
+    <p class="note">每天一小段自然英文，偷偷重複今天學到的字。</p>
+    <div id="diaryBox" class="story"></div>
+    <button onclick="newDiary()">換一句日記</button>
+    <button onclick="speak(document.getElementById('diaryBox').innerText)">🔊 聽日記</button>
+  </div>
+</section>
 
 <section id="parent" class="screen">
-  <div class="card"><h2>👩 Mom Dashboard</h2>
-  <table>
-    <tr><th>項目</th><th>目前紀錄</th></tr>
-    <tr><td>XP</td><td id="pXp">0</td></tr>
-    <tr><td>Coins</td><td id="pCoin">0</td></tr>
-    <tr><td>Correct</td><td id="pCorrect">0</td></tr>
-    <tr><td>完成項目</td><td id="pDone"></td></tr>
-    <tr><td>錯題觀察</td><td id="pWrong"></td></tr>
-    <tr><td>星星表現</td><td id="pStars"></td></tr>
-  </table>
-  <button class="danger" onclick="resetGame()">清除紀錄，重新開始</button></div>
+  <div class="card">
+    <h2>👩 Mom Dashboard</h2>
+    <table>
+      <tr><th>項目</th><th>目前紀錄</th></tr>
+      <tr><td>XP</td><td id="pXp"></td></tr>
+      <tr><td>Coins</td><td id="pCoins"></td></tr>
+      <tr><td>Level</td><td id="pLevel"></td></tr>
+      <tr><td>Streak</td><td id="pStreak"></td></tr>
+      <tr><td>完成項目</td><td id="pDone"></td></tr>
+      <tr><td>平均星星</td><td id="pStars"></td></tr>
+      <tr><td>錯題觀察</td><td id="pWrong"></td></tr>
+      <tr><td>建議</td><td id="pSuggest"></td></tr>
+    </table>
+    <button class="danger" onclick="resetGame()">清除紀錄，重新開始</button>
+  </div>
 </section>
 </main>
 
 <div id="toast"></div>
 <script src="game.js"></script>
-</body></html>
+</body>
+</html>
