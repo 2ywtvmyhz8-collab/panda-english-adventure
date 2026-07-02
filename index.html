@@ -3,120 +3,30 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Fox Academy V2.0.1 Fixed</title>
+<title>Fox Academy｜Unit 3 Review + Preview</title>
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-<div id="fxLayer"></div>
-
 <header class="topbar">
-<button onclick="go('home')">🏫 大廳</button>
-<button onclick="go('daily')">🗓 打卡</button>
-<button onclick="go('quest')">🔥 今日</button>
-<button onclick="go('world')">🌍 冒險</button>
-<button onclick="go('review')">🔁 真複習</button>
-<button onclick="go('collection')">🎴 收藏館</button>
-<button onclick="go('boss')">👾 Boss</button>
-<button onclick="go('backpack')">🎒 背包</button>
-<button onclick="go('homeFox')">🏡 小屋</button>
-<button onclick="go('parent')">👩 媽媽</button>
+<button onclick="showScreen('home')">🦊 首頁</button>
+<button onclick="showScreen('learn')">📖 先學</button>
+<button onclick="showScreen('review')">🔁 複習</button>
+<button onclick="showScreen('preview')">🌱 預習</button>
+<button onclick="showScreen('discovery')">🌟 探索</button>
+<button onclick="showScreen('boss')">👾 Boss</button>
+<button onclick="showScreen('dashboard')">👩 媽媽</button>
 </header>
-
 <main>
 <section id="home" class="screen active">
-  <div class="hero">
-    <div class="fox avatar">🦊</div>
-    <h1>Fox Academy</h1>
-    <h3>V2.0.1 Fixed｜修正版</h3>
-    <p>修正：Review Cave 一定會出題，不能只按「我已複習」；Boss Tower 恢復可玩；收藏館可正常顯示與開卡。</p>
-    <div class="stats">
-      <span>⭐ XP <b id="xpA">0</b></span>
-      <span>💰 Coins <b id="coinA">0</b></span>
-      <span>🎴 Cards <b id="cardA">0</b></span>
-      <span>🎚 Level <b id="levelA">1</b></span>
-    </div>
-    <div class="bar"><i id="barA"></i></div>
-  </div>
-  <div class="hall">
-    <div class="hallTile" onclick="go('quest')">🔥<b>今日冒險</b><small>主線任務＋寶箱</small></div>
-    <div class="hallTile" onclick="go('world')">🌍<b>自由冒險</b><small>收集卡片與金幣</small></div>
-    <div class="hallTile" onclick="go('review')">🔁<b>真複習</b><small>錯題要重新答</small></div>
-    <div class="hallTile" onclick="go('collection')">🎴<b>收藏館</b><small>百科圖鑑</small></div>
-    <div class="hallTile" onclick="go('boss')">👾<b>Boss Tower</b><small>混合挑戰</small></div>
-    <div class="hallTile" onclick="go('homeFox')">🏡<b>狐狸小屋</b><small>家具真的出現</small></div>
-  </div>
+<div class="hero"><div class="fox">🦊</div><h1>Fox Academy</h1><h3>Unit 3 Review + Gentle Preview</h3><p>穩定簡化版：先學 → 複習 → 預習 → Boss。重點是讓妹妹今天能真的複習，而不是玩壞掉的系統。</p>
+<div class="stats"><span>⭐ XP <b id="xp">0</b></span><span>✅ Correct <b id="correct">0</b></span><span>❌ Wrong <b id="wrong">0</b></span><span>📖 Learned <b id="learnedCount">0</b></span></div></div>
+<div class="card"><h2>今天建議流程</h2><div class="flow"><button onclick="showScreen('learn')">1. 📖 先看學習卡</button><button onclick="showScreen('review')">2. 🔁 複習老師內容</button><button onclick="showScreen('preview')">3. 🌱 3分鐘預習</button><button onclick="showScreen('boss')">4. 👾 Boss 檢查</button></div><p class="note">預習不硬考，只讓妹妹先看過、聽過，降低上課陌生感。</p></div>
 </section>
-
-<section id="daily" class="screen"><div class="card">
-<h2>🗓 Daily Check-in</h2>
-<div id="dailyStatus" class="focus"></div>
-<button class="big" onclick="claimLogin()">今日打卡領獎</button>
-<div class="grid" id="streakRewards"></div>
-</div></section>
-
-<section id="quest" class="screen"><div class="card">
-<h2>🔥 Today's Adventure</h2>
-<p class="note">完成五項後開寶箱。破關後仍可去自由冒險繼續玩。</p>
-<div id="questList"></div>
-<div id="chestBox" class="chest hidden"></div>
-</div></section>
-
-<section id="world" class="screen">
-<div class="card"><h2>🌍 Adventure Map</h2><p class="note">每個地圖都有題庫。答對會收集卡片，答錯進 Review Cave。</p><div class="grid" id="worldBox"></div></div>
-<div class="card hidden" id="playCard"><h2 id="playTitle"></h2><div id="playBox"></div></div>
-</section>
-
-<section id="review" class="screen"><div class="card">
-<h2>🔁 Review Cave 真複習洞穴</h2>
-<p class="note">這裡不會再有「我已複習」按鈕。必須答對題目，才算複習成功。</p>
-<div id="reviewBox"></div>
-</div></section>
-
-<section id="collection" class="screen"><div class="card">
-<h2>🎴 Fox Museum 收藏館</h2>
-<p class="note">已收藏卡片可以打開看百科與發音；未收藏會顯示問號。</p>
-<div id="collectionProgress" class="focus"></div>
-<div id="collectionTabs" class="tabs"></div>
-<div class="grid" id="collectionBox"></div>
-</div></section>
-
-<section id="boss" class="screen"><div class="card">
-<h2>👾 Boss Tower</h2>
-<p class="note">Boss 是混合挑戰。答錯選項會鎖住，打贏有動畫與徽章。</p>
-<div class="hp">Boss HP：<span id="bossHp">❤️❤️❤️❤️❤️</span></div>
-<div id="bossBox"></div>
-<div id="bossWin" class="win hidden"></div>
-</div></section>
-
-<section id="backpack" class="screen"><div class="card">
-<h2>🎒 Adventure Backpack 冒險背包</h2>
-<div class="grid" id="backpackBox"></div>
-</div></section>
-
-<section id="homeFox" class="screen"><div class="card">
-<h2>🏡 Fox Home 狐狸小屋</h2>
-<div class="room" id="roomBox"></div>
-<div class="grid" id="shopBox"></div>
-</div></section>
-
-<section id="parent" class="screen"><div class="card">
-<h2>👩 Mom Dashboard</h2>
-<table>
-<tr><th>項目</th><th>目前紀錄</th></tr>
-<tr><td>XP</td><td id="pXp"></td></tr>
-<tr><td>Coins</td><td id="pCoins"></td></tr>
-<tr><td>Level</td><td id="pLevel"></td></tr>
-<tr><td>Streak</td><td id="pStreak"></td></tr>
-<tr><td>收藏進度</td><td id="pCards"></td></tr>
-<tr><td>平均星星</td><td id="pStars"></td></tr>
-<tr><td>錯題觀察</td><td id="pWrong"></td></tr>
-<tr><td>建議</td><td id="pSuggest"></td></tr>
-</table>
-<button class="danger" onclick="resetGame()">清除紀錄</button>
-</div></section>
-</main>
-
-<div id="modal" class="modal hidden"><div class="modalCard"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
-<div id="toast"></div>
-<script src="game.js"></script>
+<section id="learn" class="screen"><div class="card"><h2>📖 Learn First｜先學再玩</h2><p class="note">新單字先看圖片、中文、例句與發音。按「我看過了」才進入練習。</p><div id="learnCards" class="grid"></div></div></section>
+<section id="review" class="screen"><div class="card"><h2>🔁 Review｜Unit 3 + 老師今日補充</h2><p class="note">題目與選項會洗牌。答錯會鎖住選項，第二次錯才出提示。</p><div class="subnav"><button onclick="renderReview('food')">🍽 Food Groups</button><button onclick="renderReview('grammar')">✏️ Grammar</button><button onclick="renderReview('reading')">📖 Reading</button><button onclick="renderReview('animals')">🦁 Animal Notes</button><button onclick="renderReview('mixed')">🎲 Mixed Review</button></div><div id="reviewBox"></div></div></section>
+<section id="preview" class="screen"><div class="card"><h2>🌱 Gentle Preview｜3分鐘預習</h2><p class="note">每天只放少量新字。不算考試、不給壓力，只建立「我看過」的熟悉感。</p><div id="previewCards" class="grid"></div><button class="big" onclick="markPreviewDone()">今天預習完成</button></div></section>
+<section id="discovery" class="screen"><div class="card"><h2>🌟 Discovery Cards｜課外探索</h2><p class="note">相關延伸，不列為必考。完成複習後可以看看，讓字彙慢慢變多。</p><div id="discoveryCards" class="grid"></div></div></section>
+<section id="boss" class="screen"><div class="card"><h2>👾 Boss：Healthy Animal Professor</h2><p class="note">混合 Unit 3、老師今日補充與少量預習。</p><div id="bossBox"></div><div id="bossDone" class="done hidden">🎉 Boss Clear！今日任務完成。</div></div></section>
+<section id="dashboard" class="screen"><div class="card"><h2>👩 Mom Dashboard</h2><table><tr><th>項目</th><th>目前狀態</th></tr><tr><td>XP</td><td id="dXp"></td></tr><tr><td>答對 / 答錯</td><td id="dAccuracy"></td></tr><tr><td>學習卡</td><td id="dLearned"></td></tr><tr><td>預習</td><td id="dPreview"></td></tr><tr><td>弱點</td><td id="dWeak"></td></tr><tr><td>建議</td><td id="dSuggest"></td></tr></table><button class="danger" onclick="resetAll()">清除紀錄，重新開始</button></div></section>
+</main><div id="toast"></div><script src="data.js"></script><script src="game.js"></script>
 </body></html>
