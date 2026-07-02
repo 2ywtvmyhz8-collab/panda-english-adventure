@@ -1,0 +1,1 @@
+const Store={key:'fox_modular_v1',state:null,init(){this.state=JSON.parse(localStorage.getItem(this.key)||'{"xp":0,"correct":0,"wrong":0,"learned":{},"preview":false,"answered":{},"weak":{}}')},save(){localStorage.setItem(this.key,JSON.stringify(this.state))},reset(){localStorage.removeItem(this.key);location.reload()}};Store.init();

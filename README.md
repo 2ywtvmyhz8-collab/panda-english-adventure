@@ -1,10 +1,21 @@
-# Fox Academy Unit 3 Review + Gentle Preview v2
+# Fox Academy Modular v1
 
-新增：
-- 複習題型可變更：選擇題、反向題、填空題、True/False、隨機挑戰。
-- 可按按鈕重新生成不同題型練習。
-- 預習也可練習：選擇、意思配對、True/False。
-- Boss 會混合多種題型。
+這版是「架構整理版」。
 
-上傳 GitHub 時請覆蓋：
-index.html, style.css, data.js, game.js, README.md
+## 檔案結構
+- index.html：頁面骨架，之後盡量不改。
+- css/style.css：畫面樣式。
+- data/unit3.js：Unit 3 題庫。
+- data/preview.js：預習資料。
+- js/store.js：存檔。
+- js/ui.js：畫面、發音、洗牌。
+- js/quiz.js：題型引擎。
+- js/app.js：學習流程。
+
+## 以後怎麼更新
+- 新增 Unit 4：新增 `data/unit4.js`，再讓 index 載入。
+- 新增題目：只改 `data/unit3.js` 或未來的 `unit4.js`。
+- 新增題型：只改 `js/quiz.js`。
+- 新增畫面：才改 `index.html`。
+
+上傳 GitHub 時，要整包上傳這些資料夾與檔案。

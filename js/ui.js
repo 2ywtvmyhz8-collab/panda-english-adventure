@@ -1,0 +1,1 @@
+const UI={$(id){return document.getElementById(id)},toast(m){let t=this.$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1300)},speak(text){let u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=.85;speechSynthesis.speak(u)},shuffle(a){return[...a].sort(()=>Math.random()-.5)}};
