@@ -1,15 +1,10 @@
-# Fox Academy Unit 3 Review + Gentle Preview v1
+# Fox Academy Unit 3 Review + Gentle Preview v2
 
-穩定簡化流程：
-1. Learn First：先看學習卡，不直接猜題。
-2. Review：Unit 3 + 老師今日 Animal Notes。
-3. Preview：每天少量 3 分鐘預習，不硬考。
-4. Discovery：少量課外延伸。
-5. Boss：混合檢查。
+新增：
+- 複習題型可變更：選擇題、反向題、填空題、True/False、隨機挑戰。
+- 可按按鈕重新生成不同題型練習。
+- 預習也可練習：選擇、意思配對、True/False。
+- Boss 會混合多種題型。
 
 上傳 GitHub 時請覆蓋：
-- index.html
-- style.css
-- data.js
-- game.js
-- README.md
+index.html, style.css, data.js, game.js, README.md
