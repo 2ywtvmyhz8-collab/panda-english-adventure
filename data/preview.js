@@ -1,6 +1,1 @@
-const PREVIEW = [
-{id:'kiwi',emoji:'🥝',en:'kiwi',zh:'奇異果',sentence:'Kiwi is a fruit. It is green inside.'},
-{id:'grape',emoji:'🍇',en:'grape',zh:'葡萄',sentence:'Grapes grow in bunches.'},
-{id:'seed',emoji:'🌱',en:'seed',zh:'種子',sentence:'Apples have seeds.'},
-{id:'calcium',emoji:'💪',en:'calcium',zh:'鈣',sentence:'Milk has calcium.'}
-];
+const PREVIEW=[{id:'temperature',emoji:'🌡️',en:'temperature',zh:'溫度',sentence:'Temperature tells how hot or cold something is.'},{id:'degree',emoji:'°',en:'degree',zh:'度',sentence:'We measure temperature in degrees.'},{id:'celsius',emoji:'℃',en:'Celsius',zh:'攝氏',sentence:'Celsius is a temperature scale.'},{id:'scale',emoji:'📊',en:'scale',zh:'刻度；量表',sentence:'A scale helps us measure things.'}];

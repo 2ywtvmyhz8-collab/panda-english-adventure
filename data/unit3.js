@@ -1,65 +1,19 @@
-const UNIT3 = {
-id:'unit3',
-title:'Unit 3 Healthy Choices',
-learnCards:[
-{id:'healthy',emoji:'🥗',en:'healthy',zh:'健康的',sentence:'Healthy foods are good for you.',type:'Unit 3'},
-{id:'wellness',emoji:'💪',en:'wellness',zh:'身心健康',sentence:'Wellness means eating well, exercising, and feeling good.',type:'Unit 3'},
-{id:'portion',emoji:'🍽️',en:'portion',zh:'份量',sentence:'A portion is the amount of food someone eats.',type:'Unit 3'},
-{id:'whole_grain',emoji:'🌾',en:'whole grain',zh:'全穀',sentence:'Whole grains are better than refined grains.',type:'Unit 3'},
-{id:'dairy',emoji:'🥛',en:'dairy',zh:'乳製品',sentence:'Milk, cheese, and yogurt are dairy foods.',type:'Unit 3'},
-{id:'vertebrates',emoji:'🦴',en:'vertebrates',zh:'有脊椎動物',sentence:'Animals with backbones are vertebrates.',type:'Teacher Note'},
-{id:'invertebrates',emoji:'🪱',en:'invertebrates',zh:'無脊椎動物',sentence:'Animals without backbones are invertebrates.',type:'Teacher Note'},
-{id:'predator',emoji:'🐺',en:'predator',zh:'掠食者',sentence:'A predator hunts other animals.',type:'Teacher Note'},
-{id:'prey',emoji:'🦌',en:'prey',zh:'獵物',sentence:'Prey is an animal taken by a predator as food.',type:'Teacher Note'},
-{id:'environment',emoji:'🌳',en:'environment',zh:'環境；棲地',sentence:'The environment is the place where animals live.',type:'Teacher Note'}
-],
+const UNIT3={learnCards:[
+{id:'height',cat:'measurement',emoji:'📏',en:'height',zh:'高度',sentence:'Height is how tall someone or something is.',type:'7/2'},
+{id:'weight',cat:'measurement',emoji:'⚖️',en:'weight',zh:'重量',sentence:'Weight is how heavy someone or something is.',type:'7/2'},
+{id:'volume',cat:'measurement',emoji:'🥤',en:'volume',zh:'容量',sentence:'Volume is how much liquid there is.',type:'7/2'},
+{id:'width',cat:'measurement',emoji:'↔️',en:'width',zh:'寬度',sentence:'Width is how wide something is.',type:'7/2'},
+{id:'length',cat:'measurement',emoji:'📐',en:'length',zh:'長度',sentence:'Length is how long something is.',type:'7/2'},
+{id:'centimeter',cat:'measurement',emoji:'📏',en:'centimeter',zh:'公分 cm',sentence:'One meter equals one hundred centimeters.',type:'7/2'},
+{id:'meter',cat:'measurement',emoji:'📏',en:'meter',zh:'公尺 m',sentence:'One meter equals one hundred centimeters.',type:'7/2'},
+{id:'kilometer',cat:'measurement',emoji:'🛣️',en:'kilometer',zh:'公里 km',sentence:'One kilometer equals one thousand meters.',type:'7/2'},
+{id:'liter',cat:'measurement',emoji:'🥤',en:'liter',zh:'公升 L',sentence:'A liter is a unit of volume.',type:'7/2'},
+{id:'healthy',cat:'core',emoji:'🥗',en:'healthy',zh:'健康的',sentence:'Healthy foods are good for you.',type:'Unit 3'},
+{id:'predator',cat:'core',emoji:'🐺',en:'predator',zh:'掠食者',sentence:'A predator hunts other animals.',type:'Teacher Note'}],
 questions:{
-food:[
-['🍎 apple belongs to which food group?','Fruits',['Fruits','Vegetables','Grains','Protein','Dairy'],'Apple is a fruit.'],
-['🍌 banana belongs to which food group?','Fruits',['Fruits','Vegetables','Grains','Protein','Dairy'],'Banana is a yellow fruit.'],
-['🥕 carrot belongs to which food group?','Vegetables',['Fruits','Vegetables','Grains','Protein','Dairy'],'Carrot is a vegetable.'],
-['🍚 rice belongs to which food group?','Grains',['Fruits','Vegetables','Grains','Protein','Dairy'],'Rice is a grain.'],
-['🍞 bread belongs to which food group?','Grains',['Fruits','Vegetables','Grains','Protein','Dairy'],'Bread is made from grain.'],
-['🥚 egg belongs to which food group?','Protein',['Fruits','Vegetables','Grains','Protein','Dairy'],'Eggs are protein foods.'],
-['🐟 fish belongs to which food group?','Protein',['Fruits','Vegetables','Grains','Protein','Dairy'],'Fish is protein.'],
-['🥛 milk belongs to which food group?','Dairy',['Fruits','Vegetables','Grains','Protein','Dairy'],'Milk is dairy.'],
-['🧀 cheese belongs to which food group?','Dairy',['Fruits','Vegetables','Grains','Protein','Dairy'],'Cheese is dairy.']
-],
-grammar:[
-['Whole fruit is ______ than fruit juice.','healthier',['healthier','healthy','healthiest'],'Compare two things: use -er.'],
-['Small changes are ______ than big changes.','easier',['easier','easy','more easy'],'easy → easier.'],
-['The chocolate chip muffin is ______ than the blueberry muffin.','bigger',['bigger','big','more big'],'big → bigger.'],
-['I ______ going to eat fruit.','am',['am','is','are'],'I am.'],
-['She ______ going to play outside.','is',['am','is','are'],'She is.'],
-['They ______ going to do chores.','are',['am','is','are'],'They are.'],
-['good 的比較級是？','better',['better','gooder','best'],'good is irregular.'],
-['bad 的比較級是？','worse',['worse','badder','worst'],'bad is irregular.']
-],
-reading:[
-['Who is Eva?','little sister',['little sister','teacher','doctor'],'Eva is the writer’s little sister.'],
-['What kind of snacks does Eva like?','salty snacks',['salty snacks','vegetables','milk'],'Look for salty snacks.'],
-['Which is healthier?','whole fruit',['whole fruit','fruit juice','candy'],'Whole fruit is healthier than fruit juice.'],
-['Which grains are better?','whole grains',['whole grains','refined grains','no grains'],'Whole grains are better for you.']
-],
-animals:[
-['a group of bats = ?','cloud',['cloud','pack','school','army'],'Bats can fly like a cloud.'],
-['a group of bees = ?','swarm',['swarm','herd','clowder','pod'],'Bees fly together in a swarm.'],
-['a group of cats = ?','clowder',['clowder','pack','tower','dazzle'],'Cats = clowder.'],
-['a group of dogs = ?','pack',['pack','school','pride','bevy'],'Dogs = pack.'],
-['a group of dolphins = ?','pod',['pod','herd','swarm','army'],'Dolphins = pod.'],
-['a group of fish = ?','school',['school','pride','clowder','crash'],'Fish swim in a school.'],
-['a group of frogs = ?','army',['army','pack','bed','cloud'],'Frogs = army.'],
-['a group of giraffes = ?','tower',['tower','troop','school','nest'],'Giraffes are tall like a tower.'],
-['a group of lions = ?','pride',['pride','pack','school','swarm'],'Lions = pride.'],
-['a group of monkeys = ?','troop',['troop','pod','dazzle','crash'],'Monkeys = troop.'],
-['a group of penguins = ?','colony',['colony','swarm','pack','tower'],'Penguins = colony.'],
-['a group of rhinoceroses = ?','crash',['crash','dazzle','pod','army'],'Rhinos = crash.'],
-['a group of wolves = ?','pack',['pack','pride','school','cloud'],'Wolves = pack.'],
-['a group of zebras = ?','dazzle',['dazzle','clowder','bed','bevy'],'Zebras = dazzle.'],
-['animals with backbones = ?','vertebrates',['vertebrates','invertebrates','mollusks','worms'],'Backbone means vertebrate.'],
-['animals without backbones = ?','invertebrates',['invertebrates','vertebrates','mammals','birds'],'No backbone means invertebrate.'],
-['prey means ?','an animal taken by a predator as food',['an animal taken by a predator as food','the place where animals live','to keep something safe'],'Prey is hunted.'],
-['defend means ?','to keep someone or something safe',['to keep someone or something safe','to try to hurt someone','a female animal'],'Defend = protect.']
-]
-}
-};
+measurement:[['height means ?','how tall someone or something is',['how tall someone or something is','how heavy something is','how wide something is'],'Height tells how tall.'],['weight means ?','how heavy someone or something is',['how heavy someone or something is','how much liquid there is','how long something is'],'Weight tells how heavy.'],['volume means ?','how much liquid there is',['how much liquid there is','how tall something is','how wide something is'],'Volume is about liquid amount.'],['width means ?','how wide something is',['how wide something is','how long something is','how heavy something is'],'Width tells how wide.'],['length means ?','how long something is',['how long something is','how tall something is','how much liquid there is'],'Length tells how long.']],
+units:[['1 meter = ? centimeters','100',['10','100','1,000'],'1 meter equals 100 centimeters.'],['1 centimeter = ? millimeters','10',['10','100','1,000'],'1 cm equals 10 mm.'],['1 kilometer = ? meters','1,000',['10','100','1,000'],'1 km equals 1,000 meters.'],['Which unit is best for road distance?','kilometer',['millimeter','centimeter','kilometer'],'Long distance uses kilometer.'],['Which unit is best for milk volume?','liter',['meter','gram','liter'],'Liquid volume uses liter.'],['decade means ?','10 years',['10 years','100 years','1,000 years'],'decade = 10 years.'],['century means ?','100 years',['10 years','100 years','1,000 years'],'century = 100 years.'],['millennium means ?','1,000 years',['10 years','100 years','1,000 years'],'millennium = 1,000 years.']],
+comparison:[["Mara's box is ______ than David's box.",'wider',['wider','wide','widest'],'Use wider than.'],["Iman's hair is ______ than Petal's hair.",'longer',['longer','long','longest'],'Use longer than.'],['then means ?','later',['later','heavier','wider'],'then = later.']],
+animals:[['a group of wolves = ?','pack',['pack','pride','school','cloud'],'Wolves = pack.'],['a group of fish = ?','school',['school','pride','clowder','crash'],'Fish swim in a school.'],['animals with backbones = ?','vertebrates',['vertebrates','invertebrates','mollusks','worms'],'Backbone means vertebrate.']],
+reasonable:[['A giraffe is 5 meters tall.','reasonable',['reasonable','not reasonable'],'Giraffes are tall, so meters make sense.'],['A cat is 300 meters tall.','not reasonable',['reasonable','not reasonable'],'300 meters is too tall for a cat.'],['A bottle has 500 milliliters of water.','reasonable',['reasonable','not reasonable'],'Milliliters are used for liquid.']]
+}};

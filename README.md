@@ -1,21 +1,9 @@
-# Fox Academy Modular v1
+# Fox Academy V2.0 Beta Rewards
 
-這版是「架構整理版」。
+更新：
+- 加入 2026/07/02 老師筆記：height、weight、volume、width、length、metric units、decade/century/millennium、wider/longer/then。
+- 新增 Measurement 題庫與合理判斷題。
+- 新增 XP、Coins、Streak、Daily Chest、Badges、Shop。
+- 保持模組化架構。
 
-## 檔案結構
-- index.html：頁面骨架，之後盡量不改。
-- css/style.css：畫面樣式。
-- data/unit3.js：Unit 3 題庫。
-- data/preview.js：預習資料。
-- js/store.js：存檔。
-- js/ui.js：畫面、發音、洗牌。
-- js/quiz.js：題型引擎。
-- js/app.js：學習流程。
-
-## 以後怎麼更新
-- 新增 Unit 4：新增 `data/unit4.js`，再讓 index 載入。
-- 新增題目：只改 `data/unit3.js` 或未來的 `unit4.js`。
-- 新增題型：只改 `js/quiz.js`。
-- 新增畫面：才改 `index.html`。
-
-上傳 GitHub 時，要整包上傳這些資料夾與檔案。
+上傳 GitHub 時請整包上傳，保留 css / data / js 資料夾。

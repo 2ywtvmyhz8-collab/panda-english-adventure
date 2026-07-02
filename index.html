@@ -1,123 +1,13 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Fox Academy Modular v1</title>
-<link rel="stylesheet" href="css/style.css"/>
-</head>
-<body>
-<header class="topbar">
-  <button onclick="App.show('home')">🦊 首頁</button>
-  <button onclick="App.show('learn')">📖 先學</button>
-  <button onclick="App.show('review')">🔁 複習</button>
-  <button onclick="App.show('preview')">🌱 預習</button>
-  <button onclick="App.show('boss')">👾 Boss</button>
-  <button onclick="App.show('dashboard')">👩 媽媽</button>
-</header>
-
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Fox Academy V2.0</title><link rel="stylesheet" href="css/style.css"/></head><body>
+<header class="topbar"><button onclick="App.show('home')">🦊 首頁</button><button onclick="App.show('daily')">🗓 打卡</button><button onclick="App.show('learn')">📖 先學</button><button onclick="App.show('review')">🔁 複習</button><button onclick="App.show('preview')">🌱 預習</button><button onclick="App.show('boss')">👾 Boss</button><button onclick="App.show('rewards')">🏆 獎勵</button><button onclick="App.show('shop')">🛒 商店</button><button onclick="App.show('dashboard')">👩 媽媽</button></header>
 <main>
-<section id="home" class="screen active">
-  <div class="hero">
-    <div class="fox">🦊</div>
-    <h1>Fox Academy</h1>
-    <h3>Modular v1｜穩定架構版</h3>
-    <p>這版重點不是加更多特效，而是把程式拆開。以後新增 Unit 4 只要加資料檔，不用整個遊戲重做。</p>
-    <div class="stats">
-      <span>⭐ XP <b id="xp">0</b></span>
-      <span>✅ Correct <b id="correct">0</b></span>
-      <span>❌ Wrong <b id="wrong">0</b></span>
-      <span>📚 Unit <b id="unitLabel">Unit 3</b></span>
-    </div>
-  </div>
-  <div class="card">
-    <h2>學習流程</h2>
-    <div class="flow">
-      <button onclick="App.show('learn')">1. 先看學習卡</button>
-      <button onclick="App.show('review')">2. 複習不同題型</button>
-      <button onclick="App.show('preview')">3. 3分鐘預習</button>
-      <button onclick="App.show('boss')">4. Boss 混合檢查</button>
-    </div>
-  </div>
-</section>
-
-<section id="learn" class="screen">
-  <div class="card">
-    <h2>📖 Learn First｜先學再玩</h2>
-    <p class="note">妹妹不熟的新單字先看這裡：圖片、中文、例句、發音。</p>
-    <div id="learnCards" class="grid"></div>
-  </div>
-</section>
-
-<section id="review" class="screen">
-  <div class="card">
-    <h2>🔁 Review｜Unit 3 題庫</h2>
-    <div class="subnav">
-      <button onclick="Review.render('food','choice')">🍽 Food</button>
-      <button onclick="Review.render('grammar','choice')">✏️ Grammar</button>
-      <button onclick="Review.render('reading','choice')">📖 Reading</button>
-      <button onclick="Review.render('animals','choice')">🦁 Animals</button>
-      <button onclick="Review.render('mixed','choice')">🎲 Mixed</button>
-    </div>
-    <div class="subnav modebar">
-      <button onclick="Review.newMode('choice')">選擇題</button>
-      <button onclick="Review.newMode('reverse')">反向題</button>
-      <button onclick="Review.newMode('fill')">填空題</button>
-      <button onclick="Review.newMode('truefalse')">True / False</button>
-      <button onclick="Review.newMode('challenge')">隨機挑戰</button>
-    </div>
-    <div id="reviewBox"></div>
-  </div>
-</section>
-
-<section id="preview" class="screen">
-  <div class="card">
-    <h2>🌱 Gentle Preview｜3分鐘預習</h2>
-    <p class="note">預習只放少量新字，不硬考。先看過、聽過即可。</p>
-    <div id="previewCards" class="grid"></div>
-    <div class="subnav modebar">
-      <button onclick="Preview.practice('choice')">預習選擇</button>
-      <button onclick="Preview.practice('reverse')">預習配對</button>
-      <button onclick="Preview.practice('truefalse')">True / False</button>
-    </div>
-    <div id="previewPractice"></div>
-    <button class="big" onclick="Preview.done()">今天預習完成</button>
-  </div>
-</section>
-
-<section id="boss" class="screen">
-  <div class="card">
-    <h2>👾 Boss：Mixed Challenge</h2>
-    <p class="note">混合題型，不固定順序。</p>
-    <div id="bossBox"></div>
-    <div id="bossDone" class="done hidden">🎉 Boss Clear！今日任務完成。</div>
-  </div>
-</section>
-
-<section id="dashboard" class="screen">
-  <div class="card">
-    <h2>👩 Mom Dashboard</h2>
-    <table>
-      <tr><th>項目</th><th>目前狀態</th></tr>
-      <tr><td>XP</td><td id="dXp"></td></tr>
-      <tr><td>答對 / 答錯</td><td id="dAccuracy"></td></tr>
-      <tr><td>學習卡</td><td id="dLearned"></td></tr>
-      <tr><td>預習</td><td id="dPreview"></td></tr>
-      <tr><td>弱點</td><td id="dWeak"></td></tr>
-      <tr><td>建議</td><td id="dSuggest"></td></tr>
-    </table>
-    <button class="danger" onclick="Store.reset()">清除紀錄</button>
-  </div>
-</section>
-</main>
-
-<div id="toast"></div>
-
-<script src="data/unit3.js"></script>
-<script src="data/preview.js"></script>
-<script src="js/store.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/quiz.js"></script>
-<script src="js/app.js"></script>
-</body>
-</html>
+<section id="home" class="screen active"><div class="hero"><div class="fox">🦊</div><h1>Fox Academy</h1><h3>V2.0 Beta｜7/2 Measurement + Rewards</h3><p>加入 7/2 老師筆記：Measurement、Metric Units、比較句型，以及 XP / Coins / Streak / Badge / Shop。</p><div class="stats"><span>⭐ XP <b id="xp">0</b></span><span>🪙 Coins <b id="coins">0</b></span><span>🔥 Streak <b id="streak">0</b></span><span>🏆 Badges <b id="badges">0</b></span></div></div><div class="card"><h2>今日任務</h2><div id="taskList" class="taskList"></div><button class="big" onclick="Rewards.claimDailyComplete()">領取今日完成寶箱</button></div></section>
+<section id="daily" class="screen"><div class="card"><h2>🗓 Daily Check-in</h2><div id="dailyBox" class="focus"></div><button class="big" onclick="Rewards.checkIn()">今日打卡</button></div></section>
+<section id="learn" class="screen"><div class="card"><h2>📖 Learn First</h2><div class="subnav"><button onclick="Learn.render('core')">Unit 3 Core</button><button onclick="Learn.render('measurement')">7/2 Measurement</button><button onclick="Learn.render('all')">All</button></div><div id="learnCards" class="grid"></div></div></section>
+<section id="review" class="screen"><div class="card"><h2>🔁 Review</h2><div class="subnav"><button onclick="Review.render('measurement','choice')">📏 Measurement</button><button onclick="Review.render('units','choice')">📐 Units</button><button onclick="Review.render('comparison','choice')">↔️ Comparison</button><button onclick="Review.render('animals','choice')">🦁 Animals</button><button onclick="Review.render('mixed','choice')">🎲 Mixed</button></div><div class="subnav modebar"><button onclick="Review.newMode('choice')">選擇題</button><button onclick="Review.newMode('reverse')">反向題</button><button onclick="Review.newMode('fill')">填空題</button><button onclick="Review.newMode('truefalse')">True / False</button><button onclick="Review.newMode('reasonable')">合理判斷</button><button onclick="Review.newMode('challenge')">隨機挑戰</button></div><div id="reviewBox"></div></div></section>
+<section id="preview" class="screen"><div class="card"><h2>🌱 Gentle Preview</h2><div id="previewCards" class="grid"></div><div class="subnav modebar"><button onclick="Preview.practice('choice')">預習選擇</button><button onclick="Preview.practice('truefalse')">True / False</button><button onclick="Preview.practice('reverse')">意思配對</button></div><div id="previewPractice"></div><button class="big" onclick="Preview.done()">預習完成</button></div></section>
+<section id="boss" class="screen"><div class="card"><h2>👾 Boss：Measurement Monster</h2><div id="bossBox"></div><button class="big" onclick="Boss.claim()">Boss Clear 領獎</button><div id="bossDone" class="done hidden">🎉 Boss Clear！+80 XP +50 Coins</div></div></section>
+<section id="rewards" class="screen"><div class="card"><h2>🏆 Badges & Rewards</h2><div id="rewardBox" class="grid"></div></div></section>
+<section id="shop" class="screen"><div class="card"><h2>🛒 Fox Shop</h2><div id="shopBox" class="grid"></div></div></section>
+<section id="dashboard" class="screen"><div class="card"><h2>👩 Mom Dashboard</h2><table><tr><th>項目</th><th>目前狀態</th></tr><tr><td>XP / Coins</td><td id="dMoney"></td></tr><tr><td>答對 / 答錯</td><td id="dAccuracy"></td></tr><tr><td>今日任務</td><td id="dTasks"></td></tr><tr><td>學習卡</td><td id="dLearned"></td></tr><tr><td>弱點</td><td id="dWeak"></td></tr><tr><td>建議</td><td id="dSuggest"></td></tr></table><button class="danger" onclick="Store.reset()">清除紀錄</button></div></section>
+</main><div id="toast"></div><script src="data/unit3.js"></script><script src="data/preview.js"></script><script src="js/store.js"></script><script src="js/ui.js"></script><script src="js/quiz.js"></script><script src="js/app.js"></script></body></html>
